@@ -1267,55 +1267,135 @@ footer.footer,
   background: transparent !important;
 }
 
-/* Remove outer frame/scrollbar - keep just the card */
+/* === Challenge Modal Styling === */
 #challenge-window .modal-dialog {
-  max-width: 550px !important;
-  margin: 2rem auto !important;
+  max-width: 600px !important;
+  margin: 1.75rem auto !important;
+  display: flex !important;
+  align-items: center !important;
+  min-height: calc(100% - 3.5rem) !important;
 }
 
-/* Remove the outer black frame completely */
 #challenge-window .modal-content {
   background-color: var(--card-white) !important;
-  border: none !important;
+  border: 3px solid var(--text-black) !important;
   border-radius: var(--radius) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 1) !important;
+  /* Neo-brutalist hard shadow */
   overflow: hidden !important;
+  padding: 0 !important;
 }
 
-/* AGGRESSIVELY remove all borders from any child element */
-#challenge-window *,
-#challenge-window *::before,
-#challenge-window *::after {
-  border-color: transparent !important;
+/* Modal Header */
+#challenge-window .modal-header {
+  background-color: var(--card-white) !important;
+  border-bottom: 3px solid var(--text-black) !important;
+  padding: 1rem 1.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
-#challenge-window .modal-content *:not(.btn):not(input):not(.badge):not(.nav-link):not(.form-control) {
-  border: none !important;
-  box-shadow: none !important;
+#challenge-window .modal-title {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  font-size: 1.25rem !important;
 }
 
-/* Keep the white background */
-#challenge-window .card,
-#challenge-window .card-body,
-#challenge-window .modal-body,
-#challenge-window>div>div,
-#challenge-window>div>div>div {
-  border: none !important;
-  box-shadow: none !important;
+
+/* Tabs in Modal */
+#challenge-window .nav-tabs {
+  border-bottom: 3px solid var(--text-black) !important;
+  background: var(--bg-cream) !important;
+  padding: 0.5rem 0.5rem 0 0.5rem !important;
+  margin: 0 !important;
+  gap: 0.5rem !important;
+}
+
+#challenge-window .nav-tabs .nav-link {
+  border: 3px solid var(--text-black) !important;
+  border-bottom: none !important;
+  border-radius: 8px 8px 0 0 !important;
+  color: var(--text-black) !important;
+  font-weight: 700 !important;
   background: var(--card-white) !important;
+  opacity: 0.7 !important;
+  transition: all 0.2s !important;
+  margin-right: 2px !important;
 }
 
-#challenge-window .card::before,
-#challenge-window *::before {
-  display: none !important;
-  border: none !important;
+#challenge-window .nav-tabs .nav-link:hover {
+  opacity: 1 !important;
+  transform: translateY(-2px) !important;
 }
 
+#challenge-window .nav-tabs .nav-link.active {
+  background: var(--accent-teal) !important;
+  opacity: 1 !important;
+  color: var(--text-black) !important;
+}
+
+/* Modal Body */
 #challenge-window .modal-body {
+  padding: 2rem !important;
+  background-color: var(--card-white) !important;
+  color: var(--text-black) !important;
   overflow-y: auto !important;
-  max-height: 70vh !important;
+}
+
+/* Inner Elements */
+#challenge-window .card-body {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+#challenge-window .challenge-name {
+  color: var(--text-black) !important;
+  font-weight: 900 !important;
+  font-size: 2rem !important;
+  text-align: center !important;
+  margin-bottom: 0.5rem !important;
+}
+
+#challenge-window .challenge-value {
+  color: var(--accent-teal) !important;
+  font-weight: 900 !important;
+  font-size: 2.5rem !important;
+  text-align: center !important;
+  display: block !important;
+  margin-bottom: 1.5rem !important;
+}
+
+#challenge-window .challenge-tags {
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+}
+
+#challenge-window .challenge-desc {
+  background: var(--bg-cream) !important;
+  border: 2px solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
   padding: 1.5rem !important;
-  background: var(--card-white) !important;
+  margin-bottom: 2rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Solves Table Styling */
+#challenge-window .table {
+  color: var(--text-black) !important;
+  border: 2px solid var(--text-black) !important;
+}
+
+#challenge-window .table thead th {
+  background-color: var(--bg-cream-dark) !important;
+  border-bottom: 2px solid var(--text-black) !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+#challenge-window .table td {
+  border-bottom: 1px solid var(--text-black) !important;
+  background-color: var(--bg-cream) !important;
 }
 
 /* Style scrollbar */
