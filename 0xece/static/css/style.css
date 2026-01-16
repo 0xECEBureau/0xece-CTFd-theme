@@ -1282,17 +1282,33 @@ footer.footer,
   overflow: hidden !important;
 }
 
-/* The inner card should have no extra borders */
+/* AGGRESSIVELY remove all borders from any child element */
+#challenge-window *,
+#challenge-window *::before,
+#challenge-window *::after {
+  border-color: transparent !important;
+}
+
+#challenge-window .modal-content *:not(.btn):not(input):not(.badge):not(.nav-link):not(.form-control) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep the white background */
 #challenge-window .card,
-#challenge-window .card-header,
-#challenge-window>div>div {
+#challenge-window .card-body,
+#challenge-window .modal-body,
+#challenge-window>div>div,
+#challenge-window>div>div>div {
   border: none !important;
   box-shadow: none !important;
   background: var(--card-white) !important;
 }
 
-#challenge-window .card::before {
+#challenge-window .card::before,
+#challenge-window *::before {
   display: none !important;
+  border: none !important;
 }
 
 #challenge-window .modal-body {
