@@ -1477,47 +1477,56 @@ a:hover {
   gap: 10px !important;
 }
 
-/* === Remove Artifacts (NUCLEAR OPTION V3 - Broad Scope) === */
-/* Force transparent background on all direct children of modal body */
-#challenge-window .modal-body>* {
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none !important;
-}
-
-/* Re-apply styling ONLY to the specific elements that need it */
-#challenge-window .challenge-desc {
-  background: var(--bg-cream) !important;
-  border-radius: var(--radius) !important;
-  padding: 1.5rem !important;
-  margin-bottom: 2rem !important;
-  border: 1px solid #dee2e6 !important;
-  line-height: 1.6 !important;
-}
-
-#challenge-window .challenge-desc * {
+/* === Remove Artifacts (Corrected & Safe) === */
+/* Reset blockquote which often creates vertical bars */
+#challenge-window blockquote,
+#challenge-window .modal-body blockquote,
+#challenge-window .challenge-desc blockquote {
   background: transparent !important;
   border: none !important;
+  border-left: none !important;
+  padding: 0 !important;
+  margin: 0 0 1rem 0 !important;
+  color: var(--text-black) !important;
 }
 
-/* Ensure inputs and buttons keep their style */
-#challenge-window .modal-body input,
-#challenge-window .modal-body button,
-#challenge-window .modal-body .btn {
-  /* Let specific input/button rules handle this */
-}
-
-/* Hide empty elements generally */
-#challenge-window *:empty {
+#challenge-window blockquote::before,
+#challenge-window blockquote::after {
+  content: none !important;
   display: none !important;
 }
 
-/* Fix specific potential containers appearing before/after description */
-.challenge-tags,
-.challenge-files,
-.challenge-hints {
-  background: transparent !important;
+/* Make code/pre transparent by default in modal so empty/whitespace ones don't show beige boxes */
+#challenge-window code,
+#challenge-window pre,
+#challenge-window .modal-body code,
+#challenge-window .modal-body pre,
+#challenge-window .challenge-desc pre {
+  background-color: transparent !important;
   border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Ensure code text is still visible */
+#challenge-window code {
+  color: #d63384;
+}
+
+/* Safe empty hiding - only hide specific structural blocks if empty */
+#challenge-window p:empty,
+#challenge-window div:empty,
+#challenge-window span:empty {
+  display: none !important;
+}
+
+/* EXCLUDED from hiding: buttons, alerts, inputs, badges */
+#challenge-window button:empty,
+#challenge-window .btn-close:empty,
+#challenge-window .alert:empty,
+#challenge-window .badge:empty {
+  display: block !important;
 }
 
 /* === Remove Bootstrap shadows === */
