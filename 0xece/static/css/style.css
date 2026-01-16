@@ -1242,6 +1242,70 @@ footer.footer,
   font-weight: 600 !important;
 }
 
+/* Hide the tab bar in challenge modal */
+#challenge-window .nav-tabs,
+#challenge-window .nav,
+#challenge-window ul.nav {
+  display: flex !important;
+  border-bottom: 3px solid var(--text-black) !important;
+  background: var(--card-white) !important;
+}
+
+#challenge-window .nav-tabs .nav-link,
+#challenge-window .nav .nav-link {
+  color: var(--text-black) !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  margin-bottom: -3px !important;
+}
+
+#challenge-window .nav-tabs .nav-link.active,
+#challenge-window .nav .nav-link.active {
+  color: var(--accent-teal) !important;
+  border-bottom-color: var(--accent-teal) !important;
+  background: transparent !important;
+}
+
+/* Remove outer frame/scrollbar - keep just the card */
+#challenge-window .modal-dialog {
+  max-width: 550px !important;
+}
+
+#challenge-window .modal-content {
+  border: 3px solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 6px 6px 0 var(--text-black) !important;
+  overflow: hidden !important;
+  max-height: 85vh !important;
+}
+
+#challenge-window .modal-body {
+  overflow-y: auto !important;
+  max-height: calc(85vh - 150px) !important;
+  scrollbar-width: thin !important;
+}
+
+/* Style scrollbar */
+#challenge-window .modal-body::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+#challenge-window .modal-body::-webkit-scrollbar-track {
+  background: var(--bg-cream) !important;
+}
+
+#challenge-window .modal-body::-webkit-scrollbar-thumb {
+  background: var(--text-black) !important;
+  border-radius: 4px !important;
+}
+
+/* Clean modal backdrop */
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
 /* === Jumbotron / Hero === */
 .jumbotron {
   background-color: transparent !important;
