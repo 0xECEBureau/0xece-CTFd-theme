@@ -1508,13 +1508,14 @@ a:hover {
   box-shadow: none !important;
 }
 
-/* Only apply styling to pre/code inside the description if they have content */
+/* Remove distinctive styling from pre blocks to prevent empty boxes */
 #challenge-window .challenge-desc pre {
-  background-color: var(--bg-cream) !important;
-  padding: 1rem !important;
-  border-radius: var(--radius-sm) !important;
-  border: 1px solid var(--text-black) !important;
-  margin: 1rem 0 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0.5rem 0 !important;
+  color: var(--text-black) !important;
+  white-space: pre-wrap !important;
 }
 
 #challenge-window .challenge-desc code {
