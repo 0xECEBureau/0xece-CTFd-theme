@@ -1114,18 +1114,50 @@ h6,
 
 /* === Link Colors === */
 a {
-  color: var(--accent-teal) !important;
+  color: var(--text-black) !important;
 }
 
 a:hover {
-  color: var(--accent-teal-hover) !important;
+  color: var(--accent-teal) !important;
 }
 
-/* Text on dark backgrounds should stay readable */
+/* Navbar links should be black */
 .navbar a,
-.card a,
+.navbar .nav-link {
+  color: var(--text-black) !important;
+}
+
+.navbar a:hover,
+.navbar .nav-link:hover {
+  color: var(--accent-teal) !important;
+}
+
+/* Card text should be readable */
+.card,
+.card-body,
+.card p,
+.card .lead {
+  color: var(--text-black) !important;
+}
+
+/* Buttons text */
 .btn {
-  color: inherit !important;
+  color: var(--text-black) !important;
+}
+
+.btn-primary {
+  background-color: var(--accent-teal) !important;
+  color: var(--text-black) !important;
+}
+
+.btn-outline-primary {
+  background-color: var(--card-white) !important;
+  color: var(--text-black) !important;
+  border-color: var(--text-black) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--accent-teal) !important;
 }
 
 /* === Badge Overrides === */
