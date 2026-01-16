@@ -496,34 +496,23 @@ pre {
   visibility: visible;
 }
 
-.modal {
-  background: var(--card-white);
-  border: var(--border-width) solid var(--text-black);
-  border-radius: var(--radius);
-  width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  transform: scale(0.9) translateY(20px);
-  transition: transform 0.3s ease;
+/* === Modal (Bootstrap Overrides) === */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
 }
 
-.modal-backdrop.active .modal {
-  transform: scale(1) translateY(0);
+/* Ensure modal wrapper is transparent and full screen */
+.modal {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .modal::before {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  right: -6px;
-  bottom: -6px;
-  background: var(--text-black);
-  border-radius: var(--radius);
-  z-index: -1;
+  display: none !important;
 }
+
 
 .modal-header {
   padding: 1.5rem;
