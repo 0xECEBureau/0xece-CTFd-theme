@@ -1,49 +1,63 @@
 {% extends "base.html" %}
 
-{% block stylesheets %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('views.themes', path='css/style.css') }}">
-{% endblock %}
-
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 text-center py-5">
-            <h1 class="display-4 mb-4">{{ Configs.ctf_name }}</h1>
-            <p class="lead text-muted mb-4">
-                {{ Configs.ctf_description or 'Hacking, CTF, Formations par des étudiants, pour des étudiants.' }}
-            </p>
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-3 mb-3">{{ Configs.ctf_name }}</h1>
+        <p class="lead text-muted">
+            {{ Configs.ctf_description or 'Hacking, CTF, Formations par des étudiants, pour des étudiants.' }}
+        </p>
 
-            <div class="d-flex gap-3 justify-content-center flex-wrap mb-5">
-                <a href="/challenges" class="btn btn-primary btn-lg">🚀 Challenges</a>
-                <a href="/scoreboard" class="btn btn-outline-primary btn-lg">📊 Scoreboard</a>
+        <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
+            <a href="/challenges" class="btn btn-primary btn-lg">🚀 Challenges</a>
+            <a href="/scoreboard" class="btn btn-outline-primary btn-lg">📊 Scoreboard</a>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 text-center">
+                <div class="card-body py-4">
+                    <div class="display-4 fw-bold" style="color: var(--accent-teal);" id="stat-challenges">-</div>
+                    <div class="text-muted text-uppercase small fw-bold">Challenges</div>
+                </div>
             </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 text-center">
+                <div class="card-body py-4">
+                    <div class="display-4 fw-bold" style="color: var(--accent-teal);" id="stat-users">-</div>
+                    <div class="text-muted text-uppercase small fw-bold">Participants</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 text-center">
+                <div class="card-body py-4">
+                    <div class="display-4 fw-bold" style="color: var(--accent-teal);" id="stat-solves">-</div>
+                    <div class="text-muted text-uppercase small fw-bold">Solves</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="row g-4 mt-4">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <div class="display-5 fw-bold text-primary" id="stat-challenges">-</div>
-                            <div class="text-muted text-uppercase small">Challenges</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <div class="display-5 fw-bold text-primary" id="stat-users">-</div>
-                            <div class="text-muted text-uppercase small">Participants</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <div class="display-5 fw-bold text-primary" id="stat-solves">-</div>
-                            <div class="text-muted text-uppercase small">Solves</div>
-                        </div>
-                    </div>
-                </div>
+    <!-- About 0xECE -->
+    <div class="card mb-5">
+        <div class="card-body text-center py-5">
+            <h2 class="mb-3">Bienvenue sur 0xECE 🏴‍☠️</h2>
+            <p class="lead mb-4">
+                Association de cybersécurité de l'ECE Paris.<br>
+                Formations, CTF, et communauté de passionnés.
+            </p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="https://0xece.fr" target="_blank" class="btn btn-outline-primary">
+                    🌐 Site web
+                </a>
+                <a href="https://discord.gg/vqYSacc3W5" target="_blank" class="btn btn-outline-primary">
+                    💬 Discord
+                </a>
             </div>
         </div>
     </div>
