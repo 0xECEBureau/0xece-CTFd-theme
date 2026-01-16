@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 
 <head>
-    <meta charset="UTF-8">
+    <title>{% block title %}{{ Configs.ctf_name }}{% endblock %}</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="0xECE CTF Platform - Hacking, CTF, Formations par des étudiants, pour des étudiants">
-    <title>{% block title %}{{ ctf_name }}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
 
-    <!-- Fonts -->
+    <!-- Load core CSS from parent core theme -->
+    <link rel="stylesheet" href="/themes/core/static/css/main.dev.css">
+
+    <!-- Custom fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap"
         rel="stylesheet">
 
-    <!-- Theme CSS -->
+    <!-- Theme custom CSS -->
     <link rel="stylesheet" href="{{ url_for('views.themes', path='css/style.css') }}">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ url_for('views.themes', path='img/logo.png') }}">
+    {% block stylesheets %}
+    {% endblock %}
 
-    {% block head %}{% endblock %}
+    {{ Plugins.styles }}
+
+    <script type="text/javascript">
+        var init = {
+            'urlRoot': "{{ request.script_root }}",
+            'csrfNonce': "{{ Session.nonce }}",
+            'userMode': "{{ Configs.user_mode }}",
+            'userId': {{ Session.id }},
+        'start': { { Configs.start | tojson } },
+        'end': { { Configs.end | tojson } },
+        'theme_settings': { { Configs.theme_settings | tojson } }
+        }
+    </script>
+    {{ Configs.theme_header }}
 </head>
 
 <body>
@@ -79,8 +94,9 @@
     {% endwith %}
 
     <!-- Main Content -->
-    <main class="main-content">
-        {% block content %}{% endblock %}
+    <main class="main-content" role="main">
+        {% block content %}
+        {% endblock %}
     </main>
 
     <!-- Footer -->
@@ -93,15 +109,32 @@
                     <a href="mailto:bureau@0xece.fr">Contact</a>
                 </div>
                 <div class="footer-copyright">
-                    © {{ now().year }} 0xECE — Powered by CTFd
+                    <a href="https://ctfd.io" class="text-secondary">
+                        <small class="text-muted">Powered by CTFd</small>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Theme JS -->
-    <script src="{{ url_for('views.themes', path='js/main.js') }}"></script>
-    {% block scripts %}{% endblock %}
+    <!-- Load JS from core theme -->
+    <script defer src="/themes/core/static/js/vendor.bundle.dev.js"></script>
+    <script defer src="/themes/core/static/js/core.dev.js"></script>
+    <script defer src="/themes/core/static/js/helpers.dev.js"></script>
+
+    {% block entrypoint %}
+    <script defer src="/themes/core/static/js/pages/main.dev.js"></script>
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+
+    <!-- Theme custom JS -->
+    <script defer src="{{ url_for('views.themes', path='js/main.js') }}"></script>
+
+    {{ Plugins.scripts }}
+
+    {{ Configs.theme_footer }}
 </body>
 
 </html>
