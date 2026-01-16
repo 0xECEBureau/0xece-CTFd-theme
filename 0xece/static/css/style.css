@@ -1028,11 +1028,18 @@ textarea.form-control {
   border: var(--border-width) solid var(--text-black) !important;
   border-radius: var(--radius) !important;
   background-color: var(--card-white) !important;
+  color: var(--text-black) !important;
+}
+
+.form-control::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
 }
 
 .form-control:focus {
   border-color: var(--accent-teal) !important;
   box-shadow: 4px 4px 0 var(--accent-teal) !important;
+  color: var(--text-black) !important;
 }
 
 /* === Table Overrides === */
