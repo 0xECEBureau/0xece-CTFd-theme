@@ -1162,20 +1162,20 @@ footer.footer,
   border: none !important;
   border-radius: var(--radius) !important;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  background-color: var(--bg-cream) !important;
+  background-color: var(--bg-cream-dark) !important;
   overflow: hidden !important;
   padding: 0 !important;
 }
 
 #challenge-window .modal-body {
   padding: 2rem !important;
-  background-color: var(--bg-cream) !important;
+  background-color: var(--bg-cream-dark) !important;
   color: var(--text-black) !important;
 }
 
 #challenge-window .modal-header {
   border-bottom: 1px solid var(--text-black) !important;
-  background-color: var(--bg-cream) !important;
+  background-color: var(--bg-cream-dark) !important;
   padding: 1rem 1.5rem !important;
 }
 
@@ -1197,8 +1197,8 @@ footer.footer,
 
 #challenge-window .nav-tabs .nav-link.active {
   color: var(--accent-teal) !important;
-  background-color: var(--card-white) !important;
-  border-color: #dee2e6 #dee2e6 var(--card-white) !important;
+  background-color: var(--bg-cream-dark) !important;
+  border-color: #dee2e6 #dee2e6 var(--bg-cream-dark) !important;
 }
 
 /* 3. Internal Elements Styling (Neo-Brutalist) */
@@ -1217,7 +1217,15 @@ footer.footer,
   display: block !important;
 }
 
-/* Remove unwanted beige rectangles (often empty code/pre blocks) */
+/* Change challenge tags to accent color */
+#challenge-window .challenge-tag,
+#challenge-window .badge {
+  background-color: var(--accent-teal) !important;
+  color: var(--text-black) !important;
+  border: 2px solid var(--text-black) !important;
+  margin-right: 0.5rem !important;
+}
+
 #challenge-window pre:empty,
 #challenge-window code:empty,
 #challenge-window .challenge-desc pre:empty,
