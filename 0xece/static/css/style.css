@@ -1454,6 +1454,8 @@ a:hover {
   width: 100% !important;
   border-collapse: collapse !important;
   margin-top: 1rem !important;
+  --bs-table-striped-bg: transparent !important;
+  /* Kill bootstrap stripe var */
 }
 
 /* Headers: Beige/Cream */
@@ -1467,17 +1469,50 @@ a:hover {
   text-align: center !important;
 }
 
-/* Rows: White */
+/* Rows: White (Force override of striped styles) */
 #challenge-window .table tbody tr,
+#challenge-window .table tbody tr:nth-of-type(odd),
+#challenge-window .table tbody tr:nth-of-type(even),
 #challenge-window .table tbody td {
   background-color: var(--card-white) !important;
   color: var(--text-black) !important;
   border-bottom: 1px solid #dee2e6 !important;
   padding: 0.75rem 1rem !important;
+  box-shadow: none !important;
 }
 
 #challenge-window .table tbody tr:last-child td {
   border-bottom: none !important;
+}
+
+/* === Fix Tab Spacing === */
+#challenge-window .nav-tabs {
+  gap: 10px !important;
+}
+
+/* === Remove Artifacts (Beige Rectangles) === */
+/* Make code/pre transparent by default in modal so empty ones don't show beige boxes */
+#challenge-window code,
+#challenge-window pre {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Only show styling if it's likely a real code block with content (inside description) */
+#challenge-window .challenge-desc pre {
+  background-color: var(--bg-cream) !important;
+  padding: 1rem !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--text-black) !important;
+  margin: 1rem 0 !important;
+}
+
+/* Hide truly empty blocks aggressively */
+#challenge-window p:empty,
+#challenge-window div:empty,
+#challenge-window span:empty {
+  display: none !important;
 }
 
 /* === Remove Bootstrap shadows === */
