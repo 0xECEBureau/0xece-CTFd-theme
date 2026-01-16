@@ -1491,15 +1491,26 @@ a:hover {
 }
 
 /* === Remove Artifacts (Beige Rectangles) === */
-/* Make code/pre transparent by default in modal so empty ones don't show beige boxes */
+/* Reset blockquote which often creates vertical bars */
+#challenge-window blockquote {
+  background: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  padding: 0 !important;
+  margin: 0 0 1rem 0 !important;
+  color: var(--text-black) !important;
+}
+
+/* Make code/pre transparent by default in modal so empty/whitespace ones don't show beige boxes */
 #challenge-window code,
 #challenge-window pre {
   background-color: transparent !important;
   border: none !important;
   padding: 0 !important;
+  box-shadow: none !important;
 }
 
-/* Only show styling if it's likely a real code block with content (inside description) */
+/* Only apply styling to pre/code inside the description if they have content */
 #challenge-window .challenge-desc pre {
   background-color: var(--bg-cream) !important;
   padding: 1rem !important;
@@ -1508,11 +1519,28 @@ a:hover {
   margin: 1rem 0 !important;
 }
 
+#challenge-window .challenge-desc code {
+  color: #d63384;
+  /* Standard code color pink */
+  word-wrap: break-word;
+}
+
 /* Hide truly empty blocks aggressively */
 #challenge-window p:empty,
 #challenge-window div:empty,
-#challenge-window span:empty {
+#challenge-window span:empty,
+#challenge-window h1:empty,
+#challenge-window h2:empty,
+#challenge-window h3:empty,
+#challenge-window h4:empty,
+#challenge-window h5:empty,
+#challenge-window h6:empty {
   display: none !important;
+}
+
+/* Fix for potential weird indentation/bars */
+#challenge-window .challenge-desc {
+  border-left: none !important;
 }
 
 /* === Remove Bootstrap shadows === */
