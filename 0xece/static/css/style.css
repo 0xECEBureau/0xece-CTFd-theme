@@ -1477,65 +1477,47 @@ a:hover {
   gap: 10px !important;
 }
 
-/* === Remove Artifacts (NUCLEAR OPTION V2) === */
-/* Force transparent background and no border on EVERYTHING inside the description */
-#challenge-window .challenge-desc * {
+/* === Remove Artifacts (NUCLEAR OPTION V3 - Broad Scope) === */
+/* Force transparent background on all direct children of modal body */
+#challenge-window .modal-body>* {
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  /* Keep margin for paragraphs to ensure text doesn't collapse */
-  /* But reset margins for others if needed */
 }
 
-/* Restore basic layout for paragraphs */
-#challenge-window .challenge-desc p {
-  margin-bottom: 1rem !important;
+/* Re-apply styling ONLY to the specific elements that need it */
+#challenge-window .challenge-desc {
+  background: var(--bg-cream) !important;
+  border-radius: var(--radius) !important;
+  padding: 1.5rem !important;
+  margin-bottom: 2rem !important;
+  border: 1px solid #dee2e6 !important;
+  line-height: 1.6 !important;
 }
 
-/* Ensure code colors are still visible */
-#challenge-window .challenge-desc code {
-  color: #d63384 !important;
-}
-
-/* Explicitly hide empty elements */
-#challenge-window .challenge-desc *:empty {
-  display: none !important;
-}
-
-/* Remove distinctive styling from pre blocks to prevent empty boxes */
-#challenge-window .challenge-desc pre {
+#challenge-window .challenge-desc * {
   background: transparent !important;
   border: none !important;
-  padding: 0 !important;
-  margin: 0.5rem 0 !important;
-  color: var(--text-black) !important;
-  white-space: pre-wrap !important;
 }
 
-#challenge-window .challenge-desc code {
-  color: #d63384;
-  /* Standard code color pink */
-  word-wrap: break-word;
+/* Ensure inputs and buttons keep their style */
+#challenge-window .modal-body input,
+#challenge-window .modal-body button,
+#challenge-window .modal-body .btn {
+  /* Let specific input/button rules handle this */
 }
 
-/* Hide truly empty blocks aggressively */
-#challenge-window p:empty,
-#challenge-window div:empty,
-#challenge-window span:empty,
-#challenge-window h1:empty,
-#challenge-window h2:empty,
-#challenge-window h3:empty,
-#challenge-window h4:empty,
-#challenge-window h5:empty,
-#challenge-window h6:empty {
+/* Hide empty elements generally */
+#challenge-window *:empty {
   display: none !important;
 }
 
-/* Fix for potential weird indentation/bars */
-#challenge-window .challenge-desc {
-  border-left: none !important;
+/* Fix specific potential containers appearing before/after description */
+.challenge-tags,
+.challenge-files,
+.challenge-hints {
+  background: transparent !important;
+  border: none !important;
 }
 
 /* === Remove Bootstrap shadows === */
