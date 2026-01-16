@@ -1613,3 +1613,9 @@ a:hover {
   padding-bottom: 0.5rem !important;
   display: inline-block !important;
 }
+/* === EXTREME ARTIFACT RESET (Appended) === */
+#challenge-window blockquote, #challenge-window pre, #challenge-window code, #challenge-window kbd, #challenge-window samp { background: transparent !important; border: none !important; border-left: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; }
+#challenge-window .challenge-desc *:not(p):not(span):not(a):not(img):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(ul):not(ol):not(li):not(strong):not(em):not(b):not(i):not(input):not(button):not(.btn) { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+#challenge-window .challenge-desc pre:not(:empty) { background-color: var(--bg-cream) !important; padding: 1rem !important; border-radius: var(--radius-sm) !important; border: 1px solid var(--text-black) !important; margin: 1rem 0 !important; display: block !important; }
+#challenge-window .challenge-desc code { color: #d63384; }
+#challenge-window *:empty { display: none !important; }
