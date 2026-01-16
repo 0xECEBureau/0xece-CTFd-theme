@@ -1142,20 +1142,7 @@ footer.footer,
   line-height: 1.7 !important;
 }
 
-.modal-body code {
-  background: var(--bg-cream) !important;
-  border: 2px solid var(--text-black) !important;
-  padding: 0.2rem 0.5rem !important;
-  border-radius: 4px !important;
-  color: var(--text-black) !important;
-}
 
-.modal-body pre {
-  background: var(--bg-cream) !important;
-  border: 2px solid var(--text-black) !important;
-  border-radius: var(--radius) !important;
-  padding: 1rem !important;
-}
 
 .modal-footer {
   border-top: var(--border-width) solid var(--text-black) !important;
@@ -1492,7 +1479,10 @@ a:hover {
 
 /* === Remove Artifacts (Beige Rectangles) === */
 /* Reset blockquote which often creates vertical bars */
-#challenge-window blockquote {
+/* Reset blockquote which often creates vertical bars */
+#challenge-window blockquote,
+#challenge-window .modal-body blockquote,
+#challenge-window .challenge-desc blockquote {
   background: transparent !important;
   border: none !important;
   border-left: none !important;
@@ -1501,9 +1491,17 @@ a:hover {
   color: var(--text-black) !important;
 }
 
+#challenge-window blockquote::before,
+#challenge-window blockquote::after {
+  content: none !important;
+  display: none !important;
+}
+
 /* Make code/pre transparent by default in modal so empty/whitespace ones don't show beige boxes */
 #challenge-window code,
-#challenge-window pre {
+#challenge-window pre,
+#challenge-window .modal-body code,
+#challenge-window .modal-body pre {
   background-color: transparent !important;
   border: none !important;
   padding: 0 !important;
@@ -1613,9 +1611,3 @@ a:hover {
   padding-bottom: 0.5rem !important;
   display: inline-block !important;
 }
-/* === EXTREME ARTIFACT RESET (Appended) === */
-#challenge-window blockquote, #challenge-window pre, #challenge-window code, #challenge-window kbd, #challenge-window samp { background: transparent !important; border: none !important; border-left: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; }
-#challenge-window .challenge-desc *:not(p):not(span):not(a):not(img):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(ul):not(ol):not(li):not(strong):not(em):not(b):not(i):not(input):not(button):not(.btn) { background-color: transparent !important; border: none !important; box-shadow: none !important; }
-#challenge-window .challenge-desc pre:not(:empty) { background-color: var(--bg-cream) !important; padding: 1rem !important; border-radius: var(--radius-sm) !important; border: 1px solid var(--text-black) !important; margin: 1rem 0 !important; display: block !important; }
-#challenge-window .challenge-desc code { color: #d63384; }
-#challenge-window *:empty { display: none !important; }
