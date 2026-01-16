@@ -1613,3 +1613,170 @@ a:hover {
   padding-bottom: 0.5rem !important;
   display: inline-block !important;
 }
+
+/* === Scoreboard Page === */
+
+/* Podium Layout */
+.scoreboard-podium {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-end !important;
+  gap: 2rem !important;
+  margin-top: 3rem !important;
+  margin-bottom: 4rem !important;
+  flex-wrap: wrap !important;
+}
+
+/* Podium Cards */
+.podium-card {
+  background: var(--card-white) !important;
+  border: var(--border-width) solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 8px 8px 0 var(--text-black) !important;
+  padding: 2rem !important;
+  text-align: center !important;
+  transition: transform 0.3s ease !important;
+  position: relative !important;
+  min-width: 250px !important;
+}
+
+.podium-card:hover {
+  transform: translate(-4px, -4px) !important;
+  box-shadow: 12px 12px 0 var(--text-black) !important;
+}
+
+/* Rank 1 (Center, Biggest) */
+.podium-card.rank-1 {
+  order: 2 !important;
+  transform: scale(1.1) !important;
+  z-index: 10 !important;
+  border-color: var(--text-black) !important;
+  background: var(--accent-teal) !important;
+  /* Teal for 1st */
+  color: white !important;
+}
+
+.podium-card.rank-1:hover {
+  transform: scale(1.1) translate(-4px, -4px) !important;
+}
+
+.podium-card.rank-1 h3 {
+  color: white !important;
+}
+
+/* Rank 2 (Left) */
+.podium-card.rank-2 {
+  order: 1 !important;
+  background: var(--bg-cream) !important;
+}
+
+/* Rank 3 (Right) */
+.podium-card.rank-3 {
+  order: 3 !important;
+  background: var(--bg-cream) !important;
+}
+
+/* Crown Icon */
+.podium-card .crown {
+  position: absolute !important;
+  top: -30px !important;
+  left: 50% !important;
+  transform: translateX(-50%) rotate(-10deg) !important;
+  font-size: 3rem !important;
+  color: var(--warning) !important;
+  /* Gold Crown */
+  text-shadow: 2px 2px 0 var(--text-black) !important;
+  animation: float 3s ease-in-out infinite !important;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateX(-50%) rotate(-10deg) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) rotate(-10deg) translateY(-10px);
+  }
+}
+
+/* Rank Number Badge */
+.podium-rank {
+  font-size: 4rem !important;
+  font-weight: 900 !important;
+  position: absolute !important;
+  top: -20px !important;
+  right: -20px !important;
+  background: var(--text-black) !important;
+  color: white !important;
+  width: 60px !important;
+  height: 60px !important;
+  line-height: 60px !important;
+  border-radius: 50% !important;
+  border: 2px solid white !important;
+}
+
+.podium-avatar span {
+  font-size: 3rem !important;
+  font-weight: bold !important;
+  display: block !important;
+  margin-bottom: 1rem !important;
+}
+
+.podium-info h3 {
+  font-weight: 900 !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1.5rem !important;
+}
+
+.podium-info .score {
+  font-family: var(--font-mono) !important;
+  font-size: 1.25rem !important;
+  font-weight: bold !important;
+  opacity: 0.8 !important;
+}
+
+/* Scoreboard Table */
+.scoreboard-custom-table {
+  background: var(--card-white) !important;
+  border: var(--border-width) solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 6px 6px 0 var(--text-black) !important;
+  padding: 1rem !important;
+  overflow: hidden !important;
+}
+
+.scoreboard-custom-table table {
+  margin-bottom: 0 !important;
+}
+
+.scoreboard-custom-table thead th {
+  background-color: var(--text-black) !important;
+  color: white !important;
+  border: none !important;
+  text-transform: uppercase !important;
+  padding: 1rem !important;
+}
+
+.scoreboard-custom-table tbody tr {
+  transition: background-color 0.2s !important;
+}
+
+.scoreboard-custom-table tbody tr:hover {
+  background-color: var(--bg-cream) !important;
+}
+
+.scoreboard-custom-table td,
+.scoreboard-custom-table th {
+  padding: 1rem !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid #dee2e6 !important;
+  font-weight: 600 !important;
+}
+
+/* Highlight Top 3 in table too? Optional, but styles above cover it */
+.table-active {
+  background-color: rgba(27, 202, 183, 0.1) !important;
+  /* Subtle Teal tint */
+}

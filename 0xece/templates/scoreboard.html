@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Scoreboard</h1>
+    </div>
+</div>
+
+<div class="container py-5" x-data="ScoreboardData">
+    <!-- Loading State -->
+    <div x-show="loading" class="text-center">
+        <i class="fas fa-circle-notch fa-spin fa-3x fa-fw spinner"></i>
+        <p class="mt-3">Chargement du classement...</p>
+    </div>
+
+    <!-- Content -->
+    <div x-show="!loading" style="display: none;">
+
+        <!-- Podium Section (Top 3) -->
+        <div class="scoreboard-podium mb-5" x-show="standings.length > 0">
+            <!-- 2nd Place -->
+            <template x-if="standings.length >= 2">
+                <div class="podium-card rank-2">
+                    <div class="podium-rank">2</div>
+                    <div class="podium-avatar">
+                        <span x-text="standings[1].name.charAt(0)"></span>
+                    </div>
+                    <div class="podium-info">
+                        <h3 x-text="standings[1].name"></h3>
+                        <p class="score" x-text="standings[1].score + ' pts'"></p>
+                    </div>
+                </div>
+            </template>
+
+            <!-- 1st Place -->
+            <template x-if="standings.length >= 1">
+                <div class="podium-card rank-1">
+                    <div class="crown"><i class="fas fa-crown"></i></div>
+                    <div class="podium-rank">1</div>
+                    <div class="podium-avatar">
+                        <span x-text="standings[0].name.charAt(0)"></span>
+                    </div>
+                    <div class="podium-info">
+                        <h3 x-text="standings[0].name"></h3>
+                        <p class="score" x-text="standings[0].score + ' pts'"></p>
+                    </div>
+                </div>
+            </template>
+
+            <!-- 3rd Place -->
+            <template x-if="standings.length >= 3">
+                <div class="podium-card rank-3">
+                    <div class="podium-rank">3</div>
+                    <div class="podium-avatar">
+                        <span x-text="standings[2].name.charAt(0)"></span>
+                    </div>
+                    <div class="podium-info">
+                        <h3 x-text="standings[2].name"></h3>
+                        <p class="score" x-text="standings[2].score + ' pts'"></p>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Full Table (Rank 4+) or All if no podium logic desired (but we want podium) -->
+        <!-- Actually, usually scoreboard shows everyone. We can highlight top 3 in table or hide them. 
+             Let's show everyone in table too for completeness, or just 4+? 
+             user said "go all out", podium + table is best. Let's just show 4+ in table to avoid duplication if the podium is big enough.
+        -->
+
+        <div class="scoreboard-custom-table">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" width="10%">#</th>
+                        <th scope="col">Utilisateur</th>
+                        <th scope="col">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="(team, index) in standings" :key="team.account_id">
+                        <!-- Show all in table, but maybe style top 3 differently or just let them be? 
+                             Let's show ALL in table so lists are complete, but podium is the highlight. -->
+                        <tr :class="{'table-active': index < 3}">
+                            <th scope="row" x-text="index + 1"></th>
+                            <td>
+                                <a :href="'/users/' + team.account_id" x-text="team.name"
+                                    style="text-decoration: none; color: inherit; font-weight: bold;"></a>
+                            </td>
+                            <td x-text="team.score"></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('ScoreboardData', () => ({
+            loading: true,
+            standings: [],
+
+            async init() {
+                try {
+                    const response = await CTFd.fetch('/api/v1/scoreboard');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.standings = data.data;
+                    }
+                } catch (e) {
+                    console.error("Error loading scoreboard:", e);
+                } finally {
+                    this.loading = false;
+                }
+            }
+        }))
+    })
+</script>
+
+<style>
+    /* Inline styles for structure, styling moves to style.css next step */
+</style>
+{% endblock %}
