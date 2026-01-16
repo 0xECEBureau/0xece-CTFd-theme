@@ -949,6 +949,11 @@ nav.navbar {
   border: var(--border-width) solid var(--text-black) !important;
   border-radius: var(--radius) !important;
   box-shadow: 4px 4px 0 var(--text-black) !important;
+  position: relative !important;
+}
+
+.card::before {
+  display: none !important;
 }
 
 .card:hover {
@@ -958,6 +963,7 @@ nav.navbar {
 
 .card-body {
   padding: 1.5rem !important;
+  background-color: var(--card-white) !important;
 }
 
 .card-header {
@@ -974,6 +980,11 @@ nav.navbar {
   text-transform: uppercase !important;
   box-shadow: 4px 4px 0 var(--text-black) !important;
   transition: all 0.15s ease !important;
+  background-color: var(--card-white) !important;
+}
+
+.btn::before {
+  display: none !important;
 }
 
 .btn:hover {
