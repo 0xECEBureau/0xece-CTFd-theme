@@ -1024,22 +1024,31 @@ nav.navbar {
 /* === Form Overrides === */
 .form-control,
 input.form-control,
-textarea.form-control {
+textarea.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input,
+textarea {
   border: var(--border-width) solid var(--text-black) !important;
   border-radius: var(--radius) !important;
   background-color: var(--card-white) !important;
-  color: var(--text-black) !important;
+  color: #000000 !important;
 }
 
-.form-control::placeholder {
+.form-control::placeholder,
+input::placeholder {
   color: #6b7280 !important;
   opacity: 1 !important;
 }
 
-.form-control:focus {
+.form-control:focus,
+input:focus,
+textarea:focus {
   border-color: var(--accent-teal) !important;
   box-shadow: 4px 4px 0 var(--accent-teal) !important;
-  color: var(--text-black) !important;
+  color: #000000 !important;
+  background-color: var(--card-white) !important;
 }
 
 /* === Table Overrides === */
