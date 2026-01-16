@@ -1162,20 +1162,20 @@ footer.footer,
   border: none !important;
   border-radius: var(--radius) !important;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  background-color: var(--card-white) !important;
+  background-color: var(--bg-cream) !important;
   overflow: hidden !important;
   padding: 0 !important;
 }
 
 #challenge-window .modal-body {
   padding: 2rem !important;
-  background-color: var(--card-white) !important;
+  background-color: var(--bg-cream) !important;
   color: var(--text-black) !important;
 }
 
 #challenge-window .modal-header {
-  border-bottom: 1px solid #dee2e6 !important;
-  background-color: var(--card-white) !important;
+  border-bottom: 1px solid var(--text-black) !important;
+  background-color: var(--bg-cream) !important;
   padding: 1rem 1.5rem !important;
 }
 
@@ -1229,11 +1229,12 @@ footer.footer,
 
 #challenge-window .challenge-desc {
   display: block !important;
-  background: var(--bg-cream) !important;
+  background: var(--card-white) !important;
   border-radius: var(--radius) !important;
   padding: 1.5rem !important;
   margin-bottom: 2rem !important;
-  border: 1px solid #dee2e6 !important;
+  border: 1px solid var(--text-black) !important;
+  /* Made border stronger to stand out */
   line-height: 1.6 !important;
 }
 
