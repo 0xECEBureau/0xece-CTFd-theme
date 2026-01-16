@@ -1477,35 +1477,31 @@ a:hover {
   gap: 10px !important;
 }
 
-/* === Remove Artifacts (Beige Rectangles) === */
-/* Reset blockquote which often creates vertical bars */
-/* Reset blockquote which often creates vertical bars */
-#challenge-window blockquote,
-#challenge-window .modal-body blockquote,
-#challenge-window .challenge-desc blockquote {
+/* === Remove Artifacts (NUCLEAR OPTION V2) === */
+/* Force transparent background and no border on EVERYTHING inside the description */
+#challenge-window .challenge-desc * {
   background: transparent !important;
-  border: none !important;
-  border-left: none !important;
-  padding: 0 !important;
-  margin: 0 0 1rem 0 !important;
-  color: var(--text-black) !important;
-}
-
-#challenge-window blockquote::before,
-#challenge-window blockquote::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* Make code/pre transparent by default in modal so empty/whitespace ones don't show beige boxes */
-#challenge-window code,
-#challenge-window pre,
-#challenge-window .modal-body code,
-#challenge-window .modal-body pre {
   background-color: transparent !important;
   border: none !important;
-  padding: 0 !important;
   box-shadow: none !important;
+  padding: 0 !important;
+  /* Keep margin for paragraphs to ensure text doesn't collapse */
+  /* But reset margins for others if needed */
+}
+
+/* Restore basic layout for paragraphs */
+#challenge-window .challenge-desc p {
+  margin-bottom: 1rem !important;
+}
+
+/* Ensure code colors are still visible */
+#challenge-window .challenge-desc code {
+  color: #d63384 !important;
+}
+
+/* Explicitly hide empty elements */
+#challenge-window .challenge-desc *:empty {
+  display: none !important;
 }
 
 /* Remove distinctive styling from pre blocks to prevent empty boxes */
