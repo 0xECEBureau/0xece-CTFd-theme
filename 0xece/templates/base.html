@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="0xECE CTF Platform - Hacking, CTF, Formations par des étudiants, pour des étudiants">
+    <title>{% block title %}{{ ctf_name }}{% endblock %}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{{ url_for('views.themes', path='css/style.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('views.themes', path='img/logo.png') }}">
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="{{ url_for('views.index') }}" class="navbar-brand">
+                <img src="{{ url_for('views.themes', path='img/logo.png') }}" alt="0xECE">
+                <span>0xECE</span>
+            </a>
+
+            <ul class="navbar-nav">
+                {% if ctf_started() %}
+                <li><a href="{{ url_for('challenges.listing') }}"
+                        class="nav-link {% if request.endpoint == 'challenges.listing' %}active{% endif %}">Challenges</a>
+                </li>
+                {% endif %}
+                <li><a href="{{ url_for('scoreboard.listing') }}"
+                        class="nav-link {% if request.endpoint == 'scoreboard.listing' %}active{% endif %}">Scoreboard</a>
+                </li>
+                {% if get_config('user_mode') == 'teams' %}
+                <li><a href="{{ url_for('teams.listing') }}"
+                        class="nav-link {% if 'teams' in request.endpoint %}active{% endif %}">Teams</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('users.listing') }}"
+                        class="nav-link {% if 'users' in request.endpoint %}active{% endif %}">Users</a></li>
+            </ul>
+
+            <div class="navbar-actions">
+                {% if authed() %}
+                {% if is_admin() %}
+                <a href="{{ url_for('admin.view') }}" class="btn btn-outline btn-sm">Admin</a>
+                {% endif %}
+                <a href="{{ url_for('users.private') }}" class="btn btn-outline btn-sm">Profile</a>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-sm">Logout</a>
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline btn-sm">Connexion</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm">Inscription</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container mt-4">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-links">
+                    <a href="https://0xece.fr" target="_blank">0xECE</a>
+                    <a href="https://discord.gg/vqYSacc3W5" target="_blank">Discord</a>
+                    <a href="mailto:bureau@0xece.fr">Contact</a>
+                </div>
+                <div class="footer-copyright">
+                    © {{ now().year }} 0xECE — Powered by CTFd
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme JS -->
+    <script src="{{ url_for('views.themes', path='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

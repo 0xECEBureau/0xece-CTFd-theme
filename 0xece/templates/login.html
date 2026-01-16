@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion - {{ ctf_name }}{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="card auth-card animate-slide-up">
+        <div class="card-body">
+            <h1 class="auth-title">Connexion</h1>
+
+            <form method="post" action="{{ url_for('auth.login') }}">
+                <input type="hidden" name="nonce" value="{{ nonce }}">
+
+                <div class="form-group">
+                    <label class="form-label" for="name">Nom d'utilisateur ou Email</label>
+                    <input type="text" class="form-input" id="name" name="name" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <input type="password" class="form-input" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                    Se connecter
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Pas encore de compte ? <a href="{{ url_for('auth.register') }}"
+                        style="color: var(--accent-teal); font-weight: 700;">Inscription</a></p>
+                <p class="mt-1"><a href="{{ url_for('auth.reset_password') }}" style="color: var(--text-gray);">Mot de
+                        passe oublié ?</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

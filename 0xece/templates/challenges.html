@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block title %}Challenges - {{ ctf_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="text-center mb-4">
+        <h1 class="animate-slide-up">Challenges</h1>
+        <p class="mt-2" style="color: var(--text-gray);">Résous les challenges et marque des points !</p>
+    </header>
+
+    <!-- Category Filters -->
+    <div class="category-filters" id="category-filters">
+        <button class="category-filter active" data-category="all">Tous</button>
+        <!-- Categories will be populated by JS -->
+    </div>
+
+    <!-- Challenges Grid -->
+    <div class="challenges-grid" id="challenges-grid">
+        <!-- Challenges will be loaded by CTFd JS API -->
+    </div>
+</div>
+
+<!-- Challenge Modal -->
+<div class="modal-backdrop" id="challenge-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <span class="challenge-category" id="modal-category"></span>
+                <h2 class="modal-title" id="modal-title"></h2>
+            </div>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="modal-description"></div>
+
+            <!-- Files -->
+            <div id="modal-files" class="mt-3" style="display: none;">
+                <h4>Fichiers</h4>
+                <div id="files-list" class="mt-1"></div>
+            </div>
+
+            <!-- Hints -->
+            <div id="modal-hints" class="mt-3" style="display: none;">
+                <h4>Hints</h4>
+                <div id="hints-list" class="mt-1"></div>
+            </div>
+
+            <!-- Flag Submission -->
+            <div class="mt-4">
+                <form id="flag-form" onsubmit="submitFlag(event)">
+                    <div class="flag-input-wrapper">
+                        <input type="text" class="form-input" id="flag-input" placeholder="0xECE{fl4g_h3r3}"
+                            autocomplete="off">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+                <div id="flag-result" class="mt-2" style="display: none;"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="challenge-meta" style="width: 100%; border: none; padding: 0; margin: 0;">
+                <span class="challenge-points" id="modal-points"></span>
+                <span class="challenge-solves" id="modal-solves"></span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Store challenges data
+    let challengesData = [];
+    let categoriesSet = new Set();
+
+    // Load challenges on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        loadChallenges();
+    });
+
+    async function loadChallenges() {
+        try {
+            const response = await CTFd.fetch('/api/v1/challenges', {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                challengesData = data.data;
+                renderChallenges(challengesData);
+                buildCategoryFilters();
+            }
+        } catch (error) {
+            console.error('Error loading challenges:', error);
+        }
+    }
+
+    function renderChallenges(challenges) {
+        const grid = document.getElementById('challenges-grid');
+        grid.innerHTML = '';
+
+        challenges.forEach((challenge, index) => {
+            const card = document.createElement('div');
+            card.className = `card challenge-card animate-slide-up ${challenge.solved_by_me ? 'solved' : ''}`;
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.onclick = () => openChallenge(challenge.id);
+
+            const categoryClass = challenge.category.toLowerCase().replace(/[^a-z]/g, '');
+            categoriesSet.add(challenge.category);
+
+            card.innerHTML = `
+            <div class="card-body">
+                <span class="challenge-category ${categoryClass}">${challenge.category}</span>
+                <h3 class="challenge-name">${challenge.name}</h3>
+                <div class="challenge-meta">
+                    <span class="challenge-points">${challenge.value} pts</span>
+                    <span class="challenge-solves">${challenge.solves} solves</span>
+                </div>
+            </div>
+        `;
+
+            grid.appendChild(card);
+        });
+    }
+
+    function buildCategoryFilters() {
+        const filtersContainer = document.getElementById('category-filters');
+
+        categoriesSet.forEach(category => {
+            const btn = document.createElement('button');
+            btn.className = 'category-filter';
+            btn.dataset.category = category;
+            btn.textContent = category;
+            btn.onclick = () => filterByCategory(category);
+            filtersContainer.appendChild(btn);
+        });
+    }
+
+    function filterByCategory(category) {
+        // Update active state
+        document.querySelectorAll('.category-filter').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.category === category || (category === 'all' && btn.dataset.category === 'all'));
+        });
+
+        // Filter challenges
+        if (category === 'all') {
+            renderChallenges(challengesData);
+        } else {
+            const filtered = challengesData.filter(c => c.category === category);
+            renderChallenges(filtered);
+        }
+    }
+
+    async function openChallenge(id) {
+        try {
+            const response = await CTFd.fetch(`/api/v1/challenges/${id}`, {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                const challenge = data.data;
+
+                document.getElementById('modal-category').textContent = challenge.category;
+                document.getElementById('modal-category').className = `challenge-category ${challenge.category.toLowerCase().replace(/[^a-z]/g, '')}`;
+                document.getElementById('modal-title').textContent = challenge.name;
+                document.getElementById('modal-description').innerHTML = challenge.description;
+                document.getElementById('modal-points').textContent = `${challenge.value} pts`;
+                document.getElementById('modal-solves').textContent = `${challenge.solves} solves`;
+
+                // Files
+                const filesSection = document.getElementById('modal-files');
+                const filesList = document.getElementById('files-list');
+                if (challenge.files && challenge.files.length > 0) {
+                    filesSection.style.display = 'block';
+                    filesList.innerHTML = challenge.files.map(f => {
+                        const filename = f.split('/').pop().split('?')[0];
+                        return `<a href="${f}" class="btn btn-outline btn-sm" download>${filename}</a>`;
+                    }).join(' ');
+                } else {
+                    filesSection.style.display = 'none';
+                }
+
+                // Hints
+                const hintsSection = document.getElementById('modal-hints');
+                const hintsList = document.getElementById('hints-list');
+                if (challenge.hints && challenge.hints.length > 0) {
+                    hintsSection.style.display = 'block';
+                    hintsList.innerHTML = challenge.hints.map((h, i) => {
+                        if (h.content) {
+                            return `<div class="alert" style="background: var(--bg-cream-dark);">${h.content}</div>`;
+                        } else {
+                            return `<button class="btn btn-outline btn-sm" onclick="unlockHint(${h.id})">Hint ${i + 1} (${h.cost} pts)</button>`;
+                        }
+                    }).join(' ');
+                } else {
+                    hintsSection.style.display = 'none';
+                }
+
+                // Reset flag form
+                document.getElementById('flag-input').value = '';
+                document.getElementById('flag-result').style.display = 'none';
+                document.getElementById('flag-input').className = 'form-input';
+
+                // Store current challenge ID
+                document.getElementById('flag-form').dataset.challengeId = id;
+
+                // Show modal
+                document.getElementById('challenge-modal').classList.add('active');
+            }
+        } catch (error) {
+            console.error('Error loading challenge:', error);
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('challenge-modal').classList.remove('active');
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('challenge-modal').addEventListener('click', function (e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    async function submitFlag(event) {
+        event.preventDefault();
+
+        const form = document.getElementById('flag-form');
+        const challengeId = form.dataset.challengeId;
+        const flag = document.getElementById('flag-input').value;
+        const resultDiv = document.getElementById('flag-result');
+        const input = document.getElementById('flag-input');
+
+        try {
+            const response = await CTFd.fetch(`/api/v1/challenges/attempt`, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    challenge_id: challengeId,
+                    submission: flag
+                })
+            });
+            const data = await response.json();
+
+            resultDiv.style.display = 'block';
+
+            if (data.success && data.data.status === 'correct') {
+                resultDiv.className = 'alert alert-success mt-2';
+                resultDiv.textContent = '🎉 Flag correct ! GG !';
+                input.className = 'form-input success';
+
+                // Reload challenges after a short delay
+                setTimeout(() => {
+                    closeModal();
+                    loadChallenges();
+                }, 1500);
+            } else if (data.data.status === 'already_solved') {
+                resultDiv.className = 'alert alert-warning mt-2';
+                resultDiv.textContent = 'Tu as déjà résolu ce challenge !';
+            } else {
+                resultDiv.className = 'alert alert-error mt-2';
+                resultDiv.textContent = '❌ Mauvais flag, réessaie !';
+                input.className = 'form-input error';
+            }
+        } catch (error) {
+            console.error('Error submitting flag:', error);
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'alert alert-error mt-2';
+            resultDiv.textContent = 'Erreur lors de la soumission';
+        }
+    }
+
+    async function unlockHint(hintId) {
+        if (!confirm('Débloquer ce hint va te coûter des points. Continuer ?')) {
+            return;
+        }
+
+        try {
+            const response = await CTFd.fetch(`/api/v1/hints/${hintId}`, {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                // Reload the challenge to show the hint
+                const challengeId = document.getElementById('flag-form').dataset.challengeId;
+                openChallenge(challengeId);
+            }
+        } catch (error) {
+            console.error('Error unlocking hint:', error);
+        }
+    }
+</script>
+{% endblock %}

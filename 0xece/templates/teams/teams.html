@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Teams - {{ ctf_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="text-center mb-4">
+        <h1 class="animate-slide-up">Teams</h1>
+        <p class="mt-2" style="color: var(--text-gray);">Les équipes en compétition</p>
+    </header>
+
+    <!-- Search -->
+    <div class="card mb-4 animate-slide-up" style="animation-delay: 0.1s;">
+        <div class="card-body">
+            <input type="text" class="form-input" id="team-search" placeholder="Rechercher une équipe...">
+        </div>
+    </div>
+
+    <!-- Teams Grid -->
+    <div class="challenges-grid" id="teams-grid">
+        <!-- Will be populated by JS -->
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        loadTeams();
+
+        document.getElementById('team-search').addEventListener('input', function (e) {
+            filterTeams(e.target.value);
+        });
+    });
+
+    let allTeams = [];
+
+    async function loadTeams() {
+        try {
+            const response = await CTFd.fetch('/api/v1/teams', {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                allTeams = data.data;
+                renderTeams(allTeams);
+            }
+        } catch (error) {
+            console.error('Error loading teams:', error);
+        }
+    }
+
+    function renderTeams(teams) {
+        const grid = document.getElementById('teams-grid');
+        grid.innerHTML = '';
+
+        teams.forEach((team, index) => {
+            const card = document.createElement('a');
+            card.href = `/teams/${team.id}`;
+            card.className = 'card animate-slide-up';
+            card.style.animationDelay = `${0.2 + index * 0.03}s`;
+            card.style.textDecoration = 'none';
+
+            card.innerHTML = `
+            <div class="card-body">
+                <h3 class="challenge-name">${team.name}</h3>
+                <div class="challenge-meta">
+                    <span class="challenge-points">${team.score || 0} pts</span>
+                    <span class="challenge-solves">#${team.place || '-'}</span>
+                </div>
+            </div>
+        `;
+
+            grid.appendChild(card);
+        });
+    }
+
+    function filterTeams(query) {
+        const filtered = allTeams.filter(team =>
+            team.name.toLowerCase().includes(query.toLowerCase())
+        );
+        renderTeams(filtered);
+    }
+</script>
+{% endblock %}

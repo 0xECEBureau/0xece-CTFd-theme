@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription - {{ ctf_name }}{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="card auth-card animate-slide-up">
+        <div class="card-body">
+            <h1 class="auth-title">Inscription</h1>
+
+            <form method="post" action="{{ url_for('auth.register') }}">
+                <input type="hidden" name="nonce" value="{{ nonce }}">
+
+                <div class="form-group">
+                    <label class="form-label" for="name">Nom d'utilisateur</label>
+                    <input type="text" class="form-input" id="name" name="name" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" class="form-input" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <input type="password" class="form-input" id="password" name="password" required>
+                </div>
+
+                {% if get_config('user_mode') == 'teams' %}
+                <div class="form-group">
+                    <label class="form-label" for="team_name">Nom de l'équipe (optionnel)</label>
+                    <input type="text" class="form-input" id="team_name" name="team_name"
+                        placeholder="Laisse vide pour rejoindre une équipe plus tard">
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                    S'inscrire
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Déjà inscrit ? <a href="{{ url_for('auth.login') }}"
+                        style="color: var(--accent-teal); font-weight: 700;">Connexion</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

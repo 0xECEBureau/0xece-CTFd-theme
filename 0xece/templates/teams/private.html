@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Mon Équipe - {{ ctf_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card animate-slide-up" style="max-width: 900px; margin: 0 auto;">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>{{ team.name }}</h1>
+            {% if team.captain_id == user.id %}
+            <a href="{{ url_for('teams.settings') }}" class="btn btn-outline btn-sm">⚙️ Paramètres</a>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <!-- Stats -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                <div class="text-center">
+                    <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-teal);">{{ team.score }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Points</div>
+                </div>
+                <div class="text-center">
+                    <div style="font-size: 2.5rem; font-weight: 900;">{{ team.place or '-' }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Classement</div>
+                </div>
+                <div class="text-center">
+                    <div style="font-size: 2.5rem; font-weight: 900;">{{ team.members|length }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Membres</div>
+                </div>
+            </div>
+
+            <!-- Invite Token -->
+            {% if team.captain_id == user.id %}
+            <div class="alert mb-4" style="background: var(--bg-cream-dark);">
+                <strong>Token d'invitation :</strong>
+                <code id="team-token" style="user-select: all;">{{ team.password }}</code>
+                <button class="btn btn-sm btn-outline" style="margin-left: 0.5rem;" onclick="copyToken()">📋
+                    Copier</button>
+            </div>
+            {% endif %}
+
+            <!-- Members -->
+            <div class="mb-4">
+                <h4 class="mb-2">Membres de l'équipe</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    {% for member in team.members %}
+                    <a href="{{ url_for('users.public', user_id=member.id) }}" class="btn btn-outline btn-sm">
+                        {{ member.name }}
+                        {% if member.id == team.captain_id %}👑{% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Score Graph -->
+            <div class="mb-4">
+                <h4 class="mb-2">Progression</h4>
+                <canvas id="team-score-graph" height="200"></canvas>
+            </div>
+
+            <!-- Solves -->
+            {% if solves %}
+            <div>
+                <h4 class="mb-2">Challenges résolus</h4>
+                <div class="challenges-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                    {% for solve in solves %}
+                    <div class="card" style="--shadow-offset: 3px;">
+                        <div class="card-body" style="padding: 1rem;">
+                            <span class="challenge-category" style="font-size: 0.65rem;">{{ solve.challenge.category
+                                }}</span>
+                            <div style="font-weight: 700; margin-top: 0.25rem;">{{ solve.challenge.name }}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray); margin-top: 0.5rem;">
+                                {{ solve.challenge.value }} pts — {{ solve.user.name }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script>
+    function copyToken() {
+        const token = document.getElementById('team-token').textContent;
+        navigator.clipboard.writeText(token);
+        alert('Token copié !');
+    }
+
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            const response = await CTFd.fetch('/api/v1/teams/me/solves', {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+
+            if (data.success && data.data.length > 0) {
+                renderGraph(data.data);
+            }
+        } catch (error) {
+            console.error('Error loading team solves:', error);
+        }
+    });
+
+    function renderGraph(solves) {
+        const ctx = document.getElementById('team-score-graph').getContext('2d');
+
+        solves.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        let cumulative = 0;
+        const data = solves.map(solve => {
+            cumulative += solve.challenge.value;
+            return {
+                x: new Date(solve.date),
+                y: cumulative
+            };
+        });
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Score',
+                    data: data,
+                    borderColor: '#1bcab7',
+                    backgroundColor: 'rgba(27, 202, 183, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#000',
+                        padding: 12,
+                        cornerRadius: 8
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: { tooltipFormat: 'DD/MM HH:mm' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

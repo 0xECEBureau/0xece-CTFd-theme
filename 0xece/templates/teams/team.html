@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}{{ team.name }} - {{ ctf_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card animate-slide-up" style="max-width: 900px; margin: 0 auto;">
+        <div class="card-header">
+            <h1>{{ team.name }}</h1>
+        </div>
+        <div class="card-body">
+            <!-- Stats -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                <div class="text-center">
+                    <div style="font-size: 2rem; font-weight: 900; color: var(--accent-teal);">{{ team.score }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Points</div>
+                </div>
+                <div class="text-center">
+                    <div style="font-size: 2rem; font-weight: 900;">{{ team.place or '-' }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Classement</div>
+                </div>
+                <div class="text-center">
+                    <div style="font-size: 2rem; font-weight: 900;">{{ team.members|length }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Membres</div>
+                </div>
+            </div>
+
+            <!-- Members -->
+            <div class="mb-4">
+                <h4 class="mb-2">Membres</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    {% for member in team.members %}
+                    <a href="{{ url_for('users.public', user_id=member.id) }}" class="btn btn-outline btn-sm">
+                        {{ member.name }}
+                        {% if member.id == team.captain_id %}👑{% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Solves -->
+            {% if solves %}
+            <div>
+                <h4 class="mb-2">Challenges résolus</h4>
+                <div class="challenges-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                    {% for solve in solves %}
+                    <div class="card" style="--shadow-offset: 3px;">
+                        <div class="card-body" style="padding: 1rem;">
+                            <span class="challenge-category" style="font-size: 0.65rem;">{{ solve.challenge.category
+                                }}</span>
+                            <div style="font-weight: 700; margin-top: 0.25rem;">{{ solve.challenge.name }}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray); margin-top: 0.5rem;">
+                                {{ solve.challenge.value }} pts — <span style="font-size: 0.75rem;">{{ solve.user.name
+                                    }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

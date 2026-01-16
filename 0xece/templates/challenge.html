@@ -1,0 +1,61 @@
+{#
+This template is used when a single challenge is loaded via AJAX.
+The main challenge functionality is handled by challenges.html modal.
+This provides compatibility with CTFd's challenge loading.
+#}
+<div class="challenge-wrapper" data-challenge-id="{{ challenge.id }}">
+    <div class="challenge-header">
+        <span class="challenge-category {{ challenge.category|lower|replace(' ', '-') }}">{{ challenge.category
+            }}</span>
+        <h2>{{ challenge.name }}</h2>
+    </div>
+
+    <div class="challenge-content">
+        <div class="challenge-description">
+            {{ challenge.description|safe }}
+        </div>
+
+        {% if challenge.files %}
+        <div class="challenge-files mt-3">
+            <h4>Fichiers</h4>
+            {% for file in challenge.files %}
+            <a href="{{ file }}" class="btn btn-outline btn-sm" download>
+                📁 {{ file.split('/')[-1].split('?')[0] }}
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if challenge.hints %}
+        <div class="challenge-hints mt-3">
+            <h4>Hints</h4>
+            {% for hint in challenge.hints %}
+            {% if hint.content %}
+            <div class="alert" style="background: var(--bg-cream-dark);">{{ hint.content }}</div>
+            {% else %}
+            <button class="btn btn-outline btn-sm hint-btn" data-hint-id="{{ hint.id }}"
+                onclick="unlockHint({{ hint.id }})">
+                Hint {{ loop.index }} ({{ hint.cost }} pts)
+            </button>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="challenge-submit mt-4">
+        <form id="challenge-form-{{ challenge.id }}" class="flag-input-wrapper">
+            <input type="text" class="form-input" id="submission-input-{{ challenge.id }}"
+                placeholder="0xECE{fl4g_h3r3}" autocomplete="off">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div id="submission-result-{{ challenge.id }}" class="mt-2" style="display: none;"></div>
+    </div>
+
+    <div class="challenge-footer mt-4"
+        style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 2px dashed var(--text-black);">
+        <span class="challenge-points" style="font-size: 1.5rem; font-weight: 900; color: var(--accent-teal);">{{
+            challenge.value }} pts</span>
+        <span class="challenge-solves" style="color: var(--text-gray);">{{ challenge.solves }} solves</span>
+    </div>
+</div>

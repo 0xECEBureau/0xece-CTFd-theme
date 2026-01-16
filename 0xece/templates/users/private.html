@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Mon Profil - {{ ctf_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card animate-slide-up" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>{{ user.name }}</h1>
+            <a href="{{ url_for('users.settings') }}" class="btn btn-outline btn-sm">⚙️ Paramètres</a>
+        </div>
+        <div class="card-body">
+            <!-- Stats -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                <div class="text-center">
+                    <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-teal);">{{ user.score }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Points</div>
+                </div>
+                <div class="text-center">
+                    <div style="font-size: 2.5rem; font-weight: 900;">{{ user.place or '-' }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Classement</div>
+                </div>
+                <div class="text-center">
+                    <div style="font-size: 2.5rem; font-weight: 900;">{{ solves|length }}</div>
+                    <div
+                        style="text-transform: uppercase; font-size: 0.8rem; font-weight: 700; color: var(--text-gray);">
+                        Solves</div>
+                </div>
+            </div>
+
+            {% if user.team %}
+            <div class="mb-4">
+                <h4>Mon Équipe</h4>
+                <a href="{{ url_for('teams.private') }}" class="btn btn-primary btn-sm mt-1">
+                    {{ user.team.name }} →
+                </a>
+            </div>
+            {% elif get_config('user_mode') == 'teams' %}
+            <div class="mb-4">
+                <div class="alert alert-warning">
+                    Tu n'as pas encore d'équipe ! <a href="{{ url_for('teams.join') }}">Rejoins ou crée une équipe</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Score Graph -->
+            <div class="mb-4">
+                <h4 class="mb-2">Progression</h4>
+                <canvas id="user-score-graph" height="200"></canvas>
+            </div>
+
+            <!-- Solves -->
+            {% if solves %}
+            <div>
+                <h4 class="mb-2">Mes Solves</h4>
+                <div class="challenges-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                    {% for solve in solves %}
+                    <div class="card" style="--shadow-offset: 3px;">
+                        <div class="card-body" style="padding: 1rem;">
+                            <span class="challenge-category" style="font-size: 0.65rem;">{{ solve.challenge.category
+                                }}</span>
+                            <div style="font-weight: 700; margin-top: 0.25rem;">{{ solve.challenge.name }}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray); margin-top: 0.5rem;">
+                                {{ solve.challenge.value }} pts
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <div class="alert" style="background: var(--bg-cream-dark); text-align: center;">
+                Aucun challenge résolu pour l'instant. <a href="{{ url_for('challenges.listing') }}">C'est parti !
+                    🚀</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            const response = await CTFd.fetch('/api/v1/users/me/solves', {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+
+            if (data.success && data.data.length > 0) {
+                renderGraph(data.data);
+            }
+        } catch (error) {
+            console.error('Error loading user solves:', error);
+        }
+    });
+
+    function renderGraph(solves) {
+        const ctx = document.getElementById('user-score-graph').getContext('2d');
+
+        // Sort by date and calculate cumulative score
+        solves.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        let cumulative = 0;
+        const data = solves.map(solve => {
+            cumulative += solve.challenge.value;
+            return {
+                x: new Date(solve.date),
+                y: cumulative
+            };
+        });
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Score',
+                    data: data,
+                    borderColor: '#1bcab7',
+                    backgroundColor: 'rgba(27, 202, 183, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#000',
+                        padding: 12,
+                        cornerRadius: 8
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: { tooltipFormat: 'DD/MM HH:mm' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' }
+                    }
+                }
+            }
+        });
+    }
+</script>
+<script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+{% endblock %}
