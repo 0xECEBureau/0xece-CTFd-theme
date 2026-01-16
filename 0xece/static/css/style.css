@@ -1174,11 +1174,83 @@ footer.footer,
   padding: 1rem 1.5rem !important;
 }
 
-/* Challenge Modal Specific */
+/* === Challenge Modal Styling (Consolidated) === */
+
+/* 1. Modal Layout & Container (Reset to Core/Bootstrap defaults) */
 #challenge-window .modal-dialog {
-  max-width: 600px !important;
+  max-width: 700px !important;
+  margin: 1.75rem auto !important;
 }
 
+#challenge-window .modal-content {
+  border: none !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  background-color: var(--card-white) !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+#challenge-window .modal-body {
+  padding: 2rem !important;
+  background-color: var(--card-white) !important;
+  color: var(--text-black) !important;
+}
+
+#challenge-window .modal-header {
+  border-bottom: 1px solid #dee2e6 !important;
+  background-color: var(--card-white) !important;
+  padding: 1rem 1.5rem !important;
+}
+
+/* 2. Tabs Styling (Clean Bootstrap Look) */
+#challenge-window .nav-tabs {
+  border-bottom: 1px solid #dee2e6 !important;
+  background: transparent !important;
+  display: flex !important;
+}
+
+#challenge-window .nav-tabs .nav-link {
+  border: 1px solid transparent !important;
+  border-top-left-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+  color: var(--text-black) !important;
+  font-weight: 600 !important;
+  margin-bottom: -1px !important;
+}
+
+#challenge-window .nav-tabs .nav-link.active {
+  color: var(--accent-teal) !important;
+  background-color: var(--card-white) !important;
+  border-color: #dee2e6 #dee2e6 var(--card-white) !important;
+}
+
+/* 3. Internal Elements Styling (Neo-Brutalist) */
+#challenge-window .challenge-name {
+  color: var(--text-black) !important;
+  font-weight: 900 !important;
+  font-size: 2rem !important;
+  text-align: center !important;
+}
+
+#challenge-window .challenge-value {
+  color: var(--accent-teal) !important;
+  font-weight: 900 !important;
+  font-size: 2.5rem !important;
+  text-align: center !important;
+  display: block !important;
+}
+
+#challenge-window .challenge-desc {
+  background: var(--bg-cream) !important;
+  border-radius: var(--radius) !important;
+  padding: 1.5rem !important;
+  margin-bottom: 2rem !important;
+  border: 1px solid #dee2e6 !important;
+  line-height: 1.6 !important;
+}
+
+/* Inputs & Buttons */
 #challenge-window .challenge-input,
 #challenge-window input[type="text"],
 #challenge-window .form-control {
@@ -1212,15 +1284,15 @@ footer.footer,
   box-shadow: 2px 2px 0 var(--text-black) !important;
 }
 
-/* Challenge value/points display */
-#challenge-window .challenge-value,
-#challenge-window .text-center.mb-3 span {
-  color: var(--accent-teal) !important;
-  font-weight: 900 !important;
-  font-size: 2rem !important;
+/* Tags */
+#challenge-window .badge {
+  background-color: var(--bg-cream-dark) !important;
+  color: var(--text-black) !important;
+  border: 2px solid var(--text-black) !important;
+  font-weight: 600 !important;
 }
 
-/* Hints and files */
+/* Hints/Accordion */
 #challenge-window .accordion-button {
   background-color: var(--bg-cream) !important;
   color: var(--text-black) !important;
@@ -1234,111 +1306,7 @@ footer.footer,
   background-color: var(--card-white) !important;
 }
 
-/* Tags in modal */
-#challenge-window .badge {
-  background-color: var(--bg-cream-dark) !important;
-  color: var(--text-black) !important;
-  border: 2px solid var(--text-black) !important;
-  font-weight: 600 !important;
-}
-
-/* Hide the tab bar in challenge modal */
-#challenge-window .nav-tabs,
-#challenge-window .nav,
-#challenge-window ul.nav {
-  display: flex !important;
-  border-bottom: 3px solid var(--text-black) !important;
-  background: var(--card-white) !important;
-}
-
-#challenge-window .nav-tabs .nav-link,
-#challenge-window .nav .nav-link {
-  color: var(--text-black) !important;
-  font-weight: 700 !important;
-  border: none !important;
-  border-bottom: 3px solid transparent !important;
-  margin-bottom: -3px !important;
-}
-
-#challenge-window .nav-tabs .nav-link.active,
-#challenge-window .nav .nav-link.active {
-  color: var(--accent-teal) !important;
-  border-bottom-color: var(--accent-teal) !important;
-  background: transparent !important;
-}
-
-/* === Challenge Modal Styling - CORE RESET === */
-#challenge-window .modal-dialog {
-  max-width: 700px !important;
-  margin: 1.75rem auto !important;
-}
-
-#challenge-window .modal-content {
-  border: none !important;
-  border-radius: var(--radius) !important;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  background-color: var(--card-white) !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-}
-
-/* Modal Body Reset */
-#challenge-window .modal-body {
-  padding: 2rem !important;
-  background-color: var(--card-white) !important;
-  color: var(--text-black) !important;
-}
-
-/* Header & Tabs */
-#challenge-window .modal-header {
-  border-bottom: 1px solid #dee2e6 !important;
-  background-color: var(--card-white) !important;
-  padding: 1rem 1.5rem !important;
-}
-
-#challenge-window .nav-tabs {
-  border-bottom: 1px solid #dee2e6 !important;
-}
-
-#challenge-window .nav-tabs .nav-link {
-  border: 1px solid transparent !important;
-  border-top-left-radius: 0.25rem !important;
-  border-top-right-radius: 0.25rem !important;
-  color: var(--text-black) !important;
-  font-weight: 600 !important;
-}
-
-#challenge-window .nav-tabs .nav-link.active {
-  color: var(--accent-teal) !important;
-  background-color: var(--card-white) !important;
-  border-color: #dee2e6 #dee2e6 var(--card-white) !important;
-}
-
-/* Internal Elements Styling (Keep Neo-Brutalist touches inside) */
-#challenge-window .challenge-name {
-  color: var(--text-black) !important;
-  font-weight: 900 !important;
-  font-size: 2rem !important;
-  text-align: center !important;
-}
-
-#challenge-window .challenge-value {
-  color: var(--accent-teal) !important;
-  font-weight: 900 !important;
-  font-size: 2.5rem !important;
-  text-align: center !important;
-  display: block !important;
-}
-
-#challenge-window .challenge-desc {
-  background: var(--bg-cream) !important;
-  border-radius: var(--radius) !important;
-  padding: 1.5rem !important;
-  margin-bottom: 2rem !important;
-  border: 1px solid #dee2e6 !important;
-}
-
-/* Hide ::before/::after that might cause borders */
+/* Cleanup */
 #challenge-window .modal-content::before,
 #challenge-window .modal-content::after,
 #challenge-window .modal-dialog::before,
