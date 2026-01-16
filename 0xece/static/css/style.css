@@ -1240,3 +1240,64 @@ a:hover {
 .form-control:focus {
   box-shadow: 4px 4px 0 var(--accent-teal) !important;
 }
+
+/* === Challenge Cards (Core Theme) === */
+.challenge-button {
+  background-color: var(--card-white) !important;
+  border: var(--border-width) solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 4px 4px 0 var(--text-black) !important;
+  transition: all 0.2s ease !important;
+  padding: 1.5rem !important;
+}
+
+.challenge-button:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0 var(--text-black) !important;
+  background-color: var(--card-white) !important;
+}
+
+.challenge-button .challenge-inner p {
+  color: var(--text-black) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.challenge-button .challenge-inner span {
+  color: var(--accent-teal) !important;
+  font-weight: 900 !important;
+  font-size: 1.25rem !important;
+}
+
+.challenge-solved {
+  opacity: 0.7 !important;
+  position: relative !important;
+}
+
+.challenge-solved::after {
+  content: '✓' !important;
+  position: absolute !important;
+  top: -10px !important;
+  right: -10px !important;
+  width: 28px !important;
+  height: 28px !important;
+  background: var(--success) !important;
+  border: 2px solid var(--text-black) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: bold !important;
+  font-size: 0.875rem !important;
+  color: white !important;
+}
+
+.category-header h3 {
+  color: var(--text-black) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  border-bottom: 3px solid var(--accent-teal) !important;
+  padding-bottom: 0.5rem !important;
+  display: inline-block !important;
+}
