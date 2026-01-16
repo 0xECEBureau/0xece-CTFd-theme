@@ -1228,6 +1228,7 @@ footer.footer,
 }
 
 #challenge-window .challenge-desc {
+  display: block !important;
   background: var(--bg-cream) !important;
   border-radius: var(--radius) !important;
   padding: 1.5rem !important;
