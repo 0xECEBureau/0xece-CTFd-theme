@@ -1104,16 +1104,142 @@ footer.footer,
 .modal-content {
   border: var(--border-width) solid var(--text-black) !important;
   border-radius: var(--radius) !important;
-  box-shadow: 6px 6px 0 var(--text-black) !important;
+  box-shadow: 8px 8px 0 var(--text-black) !important;
+  background-color: var(--card-white) !important;
+  overflow: hidden !important;
 }
 
 .modal-header {
   border-bottom: var(--border-width) solid var(--text-black) !important;
-  background-color: var(--bg-cream) !important;
+  background-color: var(--card-white) !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.modal-header .modal-title,
+.modal-header h5,
+.modal-header h4 {
+  color: var(--text-black) !important;
+  font-weight: 900 !important;
+  font-size: 1.5rem !important;
+}
+
+.modal-header .btn-close {
+  background-color: transparent !important;
+  border: 2px solid var(--text-black) !important;
+  border-radius: 6px !important;
+  opacity: 1 !important;
+  padding: 0.5rem !important;
+}
+
+.modal-header .btn-close:hover {
+  background-color: var(--error) !important;
+}
+
+.modal-body {
+  padding: 1.5rem !important;
+  background-color: var(--card-white) !important;
+  color: var(--text-black) !important;
+}
+
+.modal-body p,
+.modal-body div,
+.modal-body span {
+  color: var(--text-black) !important;
+}
+
+.modal-body .challenge-desc,
+.modal-body .challenge-description {
+  color: var(--text-black) !important;
+  line-height: 1.7 !important;
+}
+
+.modal-body code {
+  background: var(--bg-cream) !important;
+  border: 2px solid var(--text-black) !important;
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 4px !important;
+  color: var(--text-black) !important;
+}
+
+.modal-body pre {
+  background: var(--bg-cream) !important;
+  border: 2px solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  padding: 1rem !important;
 }
 
 .modal-footer {
   border-top: var(--border-width) solid var(--text-black) !important;
+  background-color: var(--bg-cream) !important;
+  padding: 1rem 1.5rem !important;
+}
+
+/* Challenge Modal Specific */
+#challenge-window .modal-dialog {
+  max-width: 600px !important;
+}
+
+#challenge-window .challenge-input,
+#challenge-window input[type="text"],
+#challenge-window .form-control {
+  border: 3px solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  padding: 0.875rem 1rem !important;
+  font-size: 1rem !important;
+  background-color: var(--card-white) !important;
+  color: var(--text-black) !important;
+}
+
+#challenge-window .challenge-input:focus,
+#challenge-window input[type="text"]:focus {
+  box-shadow: 4px 4px 0 var(--accent-teal) !important;
+  border-color: var(--accent-teal) !important;
+}
+
+#challenge-window .btn-primary,
+#challenge-window button[type="submit"] {
+  background-color: var(--accent-teal) !important;
+  border: 3px solid var(--text-black) !important;
+  color: var(--text-black) !important;
+  font-weight: 700 !important;
+  box-shadow: 4px 4px 0 var(--text-black) !important;
+  padding: 0.75rem 1.5rem !important;
+}
+
+#challenge-window .btn-primary:hover,
+#challenge-window button[type="submit"]:hover {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0 var(--text-black) !important;
+}
+
+/* Challenge value/points display */
+#challenge-window .challenge-value,
+#challenge-window .text-center.mb-3 span {
+  color: var(--accent-teal) !important;
+  font-weight: 900 !important;
+  font-size: 2rem !important;
+}
+
+/* Hints and files */
+#challenge-window .accordion-button {
+  background-color: var(--bg-cream) !important;
+  color: var(--text-black) !important;
+  border: 2px solid var(--text-black) !important;
+  font-weight: 700 !important;
+}
+
+#challenge-window .accordion-body {
+  border: 2px solid var(--text-black) !important;
+  border-top: none !important;
+  background-color: var(--card-white) !important;
+}
+
+/* Tags in modal */
+#challenge-window .badge {
+  background-color: var(--bg-cream-dark) !important;
+  color: var(--text-black) !important;
+  border: 2px solid var(--text-black) !important;
+  font-weight: 600 !important;
 }
 
 /* === Jumbotron / Hero === */
