@@ -1230,6 +1230,16 @@ footer.footer,
   display: block !important;
 }
 
+/* Remove unwanted beige rectangles (often empty code/pre blocks) */
+#challenge-window pre:empty,
+#challenge-window code:empty,
+#challenge-window .challenge-desc pre:empty,
+#challenge-window .challenge-desc code:empty {
+  display: none !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
 #challenge-window .challenge-desc {
   background: var(--bg-cream) !important;
   border-radius: var(--radius) !important;
@@ -1437,6 +1447,37 @@ a:hover {
 
 .progress-bar {
   background-color: var(--accent-teal) !important;
+}
+
+/* === Solves Table (Challenge Modal) === */
+#challenge-window .table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 1rem !important;
+}
+
+/* Headers: Beige/Cream */
+#challenge-window .table thead th {
+  background-color: var(--bg-cream-dark) !important;
+  color: var(--text-black) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  border-bottom: 2px solid var(--text-black) !important;
+  padding: 1rem !important;
+  text-align: center !important;
+}
+
+/* Rows: White */
+#challenge-window .table tbody tr,
+#challenge-window .table tbody td {
+  background-color: var(--card-white) !important;
+  color: var(--text-black) !important;
+  border-bottom: 1px solid #dee2e6 !important;
+  padding: 0.75rem 1rem !important;
+}
+
+#challenge-window .table tbody tr:last-child td {
+  border-bottom: none !important;
 }
 
 /* === Remove Bootstrap shadows === */
