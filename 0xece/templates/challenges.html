@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold" style="color: #000;">Challenges</h1>
+        <p style="color: #4a4a4a;">Teste tes compétences en cybersécurité</p>
+    </div>
+
+    {% include "components/errors.html" %}
+
+    <!-- Challenge Modal from Core -->
+    <div x-data="ChallengeBoard" @load-challenges.window="loadChallenges()"
+        @load-challenge.window="loadChallenge($event.detail)">
+        <div x-ref="challengeWindow" id="challenge-window" class="modal fade" tabindex="-1" role="dialog" x-data=""
+            x-html="$store.challenge.data.view"></div>
+    </div>
+
+    <!-- Custom Sections by Tags -->
+    <div id="challenges-sections">
+        <div class="text-center py-5" id="loading-spinner">
+            <i class="fas fa-circle-notch fa-spin fa-3x fa-fw"></i>
+            <p class="mt-3" style="color: #4a4a4a;">Chargement des challenges...</p>
+        </div>
+
+        <!-- Sections will be injected here by JavaScript -->
+    </div>
+</div>
+
+<style>
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid #000;
+    }
+
+    .section-icon {
+        width: 50px;
+        height: 50px;
+        border: 3px solid #000;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    .challenge-card-custom {
+        background: #fff;
+        border: 3px solid #000;
+        border-radius: 10px;
+        box-shadow: 4px 4px 0 #000;
+        padding: 1.25rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        height: 100%;
+    }
+
+    .challenge-card-custom:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0 #000;
+    }
+
+    .challenge-card-custom.solved {
+        opacity: 0.7;
+        position: relative;
+    }
+
+    .challenge-card-custom.solved::after {
+        content: '✓';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 28px;
+        height: 28px;
+        background: #22c55e;
+        border: 2px solid #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+    }
+
+    .challenge-badge {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border: 2px solid #000;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+        color: #fff;
+    }
+
+    .challenge-name {
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 0.5rem;
+    }
+
+    .challenge-points {
+        font-weight: 900;
+        font-size: 1.25rem;
+        color: #1bcab7;
+    }
+
+    .challenge-solves {
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+{{ Assets.js("assets/js/challenges.js") }}
+<script>
+    (function () {
+        const sections = [
+            { tag: 'Entrainement', title: 'Entraînement', subtitle: 'Challenges pour progresser à ton rythme', icon: '💪', color: '#1bcab7' },
+            { tag: 'Formation', title: 'Formations', subtitle: 'Challenges des formations 0xECE', icon: '🎓', color: '#8b5cf6' },
+            { tag: 'CTF', title: 'Anciens CTFs', subtitle: 'Challenges des CTFs organisés par 0xECE', icon: '🏆', color: '#ef4444' }
+        ];
+
+        async function loadChallenges() {
+            try {
+                const response = await CTFd.fetch('/api/v1/challenges');
+                const data = await response.json();
+
+                if (!data.success) {
+                    console.error('Failed to load challenges');
+                    return;
+                }
+
+                const challenges = data.data;
+                const container = document.getElementById('challenges-sections');
+                const spinner = document.getElementById('loading-spinner');
+
+                if (spinner) spinner.style.display = 'none';
+
+                let html = '';
+
+                // Process each section
+                for (const section of sections) {
+                    const sectionChallenges = challenges.filter(c =>
+                        c.tags && c.tags.some(t => t.value.toLowerCase() === section.tag.toLowerCase())
+                    );
+
+                    if (sectionChallenges.length === 0) continue;
+
+                    html += `
+                    <div class="mb-5">
+                        <div class="section-header">
+                            <div class="section-icon" style="background: ${section.color};">${section.icon}</div>
+                            <div>
+                                <h2 class="mb-0" style="color: #000; font-weight: 900;">${section.title}</h2>
+                                <p class="mb-0" style="color: #6b7280;">${section.subtitle}</p>
+                            </div>
+                        </div>
+                        <div class="row g-4">
+                            ${sectionChallenges.map(c => renderChallenge(c, section.color)).join('')}
+                        </div>
+                    </div>
+                `;
+                }
+
+                // Challenges without special tags
+                const specialTags = sections.map(s => s.tag.toLowerCase());
+                const otherChallenges = challenges.filter(c => {
+                    if (!c.tags || c.tags.length === 0) return true;
+                    return !c.tags.some(t => specialTags.includes(t.value.toLowerCase()));
+                });
+
+                if (otherChallenges.length > 0) {
+                    html += `
+                    <div class="mb-5">
+                        <div class="section-header">
+                            <div class="section-icon" style="background: #6b7280;">🔥</div>
+                            <div>
+                                <h2 class="mb-0" style="color: #000; font-weight: 900;">Autres Challenges</h2>
+                                <p class="mb-0" style="color: #6b7280;">Challenges divers</p>
+                            </div>
+                        </div>
+                        <div class="row g-4">
+                            ${otherChallenges.map(c => renderChallenge(c, '#6b7280')).join('')}
+                        </div>
+                    </div>
+                `;
+                }
+
+                container.innerHTML = html;
+
+                // Add click handlers
+                document.querySelectorAll('.challenge-card-custom').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const id = parseInt(card.dataset.id);
+                        window.dispatchEvent(new CustomEvent('load-challenge', { detail: id }));
+                    });
+                });
+
+            } catch (error) {
+                console.error('Error loading challenges:', error);
+            }
+        }
+
+        function renderChallenge(c, color) {
+            const solvedClass = c.solved_by_me ? 'solved' : '';
+            return `
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="challenge-card-custom ${solvedClass}" data-id="${c.id}">
+                    <span class="challenge-badge" style="background: ${color};">${c.category}</span>
+                    <div class="challenge-name">${c.name}</div>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span class="challenge-points">${c.value} pts</span>
+                        <span class="challenge-solves">${c.solves} solves</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        }
+
+        // Load when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadChallenges);
+        } else {
+            loadChallenges();
+        }
+    })();
+</script>
+{% endblock %}
