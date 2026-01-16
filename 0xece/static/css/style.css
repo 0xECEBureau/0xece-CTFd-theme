@@ -1479,9 +1479,13 @@ a:hover {
 
 /* === Remove Artifacts (Corrected & Safe) === */
 /* Reset blockquote which often creates vertical bars */
+/* Reset blockquote which often creates vertical bars */
 #challenge-window blockquote,
+#challenge-window .blockquote,
 #challenge-window .modal-body blockquote,
-#challenge-window .challenge-desc blockquote {
+#challenge-window .modal-body .blockquote,
+#challenge-window .challenge-desc blockquote,
+#challenge-window .challenge-desc .blockquote {
   background: transparent !important;
   border: none !important;
   border-left: none !important;
