@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center py-5">
+            <h1 class="display-4 mb-4">{{ Configs.ctf_name }}</h1>
+            <p class="lead text-muted mb-4">
+                {{ Configs.ctf_description or 'Hacking, CTF, Formations par des étudiants, pour des étudiants.' }}
+            </p>
+
+            <div class="d-flex gap-3 justify-content-center flex-wrap mb-5">
+                <a href="/challenges" class="btn btn-primary btn-lg">🚀 Challenges</a>
+                <a href="/scoreboard" class="btn btn-outline-primary btn-lg">📊 Scoreboard</a>
+            </div>
+
+            <div class="row g-4 mt-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="display-5 fw-bold text-primary" id="stat-challenges">-</div>
+                            <div class="text-muted text-uppercase small">Challenges</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="display-5 fw-bold text-primary" id="stat-users">-</div>
+                            <div class="text-muted text-uppercase small">Participants</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="display-5 fw-bold text-primary" id="stat-solves">-</div>
+                            <div class="text-muted text-uppercase small">Solves</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        try {
+            const [challengesRes, usersRes] = await Promise.all([
+                CTFd.fetch('/api/v1/statistics/challenges'),
+                CTFd.fetch('/api/v1/statistics/users')
+            ]);
+
+            const challengesData = await challengesRes.json();
+            const usersData = await usersRes.json();
+
+            if (challengesData.success) {
+                document.getElementById('stat-challenges').textContent = challengesData.data.total || 0;
+                document.getElementById('stat-solves').textContent = challengesData.data.solves || 0;
+            }
+
+            if (usersData.success) {
+                document.getElementById('stat-users').textContent = usersData.data.registered || 0;
+            }
+        } catch (error) {
+            console.log('Stats not available');
+        }
+    });
+</script>
+{% endblock %}
