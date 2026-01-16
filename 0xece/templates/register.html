@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <!-- Logo & Title -->
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold" style="color: #000;">🚀 Inscription</h1>
+                <p style="color: #4a4a4a;">Rejoins la communauté 0xECE</p>
+            </div>
+
+            <!-- Register Card -->
+            <div class="card">
+                <div class="card-body p-4">
+                    {% include "components/errors.html" %}
+
+                    {% if integrations.mlc() %}
+                    <a class="btn btn-secondary btn-lg w-100 mb-3" href="{{ url_for('auth.oauth_login') }}">
+                        Login with Major League Cyber
+                    </a>
+                    <hr class="my-4">
+                    {% endif %}
+
+                    {% with form = Forms.auth.RegistrationForm() %}
+                    {% from "macros/forms.html" import render_extra_fields %}
+
+                    <form method="post" accept-charset="utf-8" role="form">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-uppercase small" style="color: #000;">
+                                {{ form.name.label.text }}
+                            </label>
+                            {{ form.name(class="form-control form-control-lg", value=name, autocomplete="username",
+                            placeholder="Ton pseudo") }}
+                            <small class="form-text" style="color: #6b7280;">
+                                Ton nom d'utilisateur sur la plateforme
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-uppercase small" style="color: #000;">
+                                {{ form.email.label.text }}
+                            </label>
+                            {{ form.email(class="form-control form-control-lg", value=email, autocomplete="email",
+                            placeholder="ton@email.com") }}
+                            <small class="form-text" style="color: #6b7280;">
+                                Jamais affiché publiquement
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-uppercase small" style="color: #000;">
+                                {{ form.password.label.text }}
+                            </label>
+                            {{ form.password(class="form-control form-control-lg", value=password,
+                            autocomplete="new-password", placeholder="••••••••") }}
+                            <small class="form-text" style="color: #6b7280;">
+                                Choisis un mot de passe fort
+                            </small>
+                        </div>
+
+                        {{ form.nonce() }}
+                        {{ render_extra_fields(form.extra) }}
+
+                        <div class="d-grid gap-2 mb-3">
+                            {{ form.submit(class="btn btn-primary btn-lg") }}
+                        </div>
+
+                        {% if Configs.tos_or_privacy %}
+                        <div class="text-center">
+                            <small style="color: #6b7280;">
+                                En t'inscrivant, tu acceptes notre
+                                <a href="{{ Configs.privacy_link }}" target="_blank">politique de confidentialité</a>
+                                et nos <a href="{{ Configs.tos_link }}" target="_blank">conditions d'utilisation</a>
+                            </small>
+                        </div>
+                        {% endif %}
+                    </form>
+                    {% endwith %}
+                </div>
+            </div>
+
+            <!-- Login Link -->
+            <div class="text-center mt-4">
+                <p style="color: #4a4a4a;">
+                    Déjà un compte ?
+                    <a href="{{ url_for('auth.login') }}" class="fw-bold" style="color: #1bcab7;">
+                        Connecte-toi !
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
