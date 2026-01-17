@@ -22,9 +22,7 @@ function initBackgrounds() {
     // Default to 'bg-special' (Static Stripes) for most pages (challenges, account, etc)
     // Use 'bg-animated' (Dot Grid) for Index and Scoreboard only
     if (isIndex || isScoreboard) {
-        document.body.classList.add('bg-animated');
-    } else {
-        document.body.classList.add('bg-special');
+        document.body.classList.add('bg-dot-grid');
     }
 }
 

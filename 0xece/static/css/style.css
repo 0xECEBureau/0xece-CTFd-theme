@@ -61,33 +61,43 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-}
 
-/* Page Specific Backgrounds (Applied via JS) */
-.bg-animated {
-  background-image: radial-gradient(var(--text-gray) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: moveBackground 60s linear infinite;
-}
-
-.bg-special {
-  /* Diagonal Stripes for Challenges/Account */
+  /* DEFAULT: Animated Stripes (Challenges, Account, etc.) */
   background-image: repeating-linear-gradient(45deg,
       var(--bg-cream) 0,
       var(--bg-cream) 20px,
       #e8dcc5 20px,
       #e8dcc5 40px);
-  background-attachment: fixed;
-  /* Parallax-like feel */
+  background-size: 200% 200%;
+  animation: moveStripes 40s linear infinite;
 }
 
-@keyframes moveBackground {
+/* OVERRIDE: Animated Dots (Index & Scoreboard) */
+body.bg-dot-grid {
+  background-image: radial-gradient(var(--text-gray) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: moveDots 60s linear infinite;
+}
+
+/* Animation for Dots */
+@keyframes moveDots {
   0% {
     background-position: 0 0;
   }
 
   100% {
     background-position: 40px 40px;
+  }
+}
+
+/* Animation for Stripes */
+@keyframes moveStripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 56px 56px;
   }
 }
 
