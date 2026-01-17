@@ -1702,19 +1702,24 @@ a:hover {
 }
 
 /* Rank Number Badge */
+/* Improved Corner Rank Badge */
 .podium-rank {
-  font-size: 4rem !important;
+  font-size: 2rem !important;
   font-weight: 900 !important;
   position: absolute !important;
-  top: -20px !important;
-  right: -20px !important;
+  top: 0 !important;
+  right: 0 !important;
   background: var(--text-black) !important;
   color: white !important;
-  width: 60px !important;
-  height: 60px !important;
-  line-height: 60px !important;
-  border-radius: 50% !important;
-  border: 2px solid white !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0.5rem 1rem !important;
+  border-bottom-left-radius: var(--radius) !important;
+  border-top-right-radius: var(--radius) !important;
+  /* Match card radius if needed, or 0 */
+  border: none !important;
+  border-left: 3px solid white !important;
+  border-bottom: 3px solid white !important;
 }
 
 .podium-avatar span {
@@ -1734,7 +1739,9 @@ a:hover {
   font-family: var(--font-mono) !important;
   font-size: 1.25rem !important;
   font-weight: bold !important;
-  opacity: 0.8 !important;
+  color: var(--text-black) !important;
+  opacity: 1 !important;
+  /* Removed opacity for better contrast */
 }
 
 /* Scoreboard Table */
@@ -1752,11 +1759,12 @@ a:hover {
 }
 
 .scoreboard-custom-table thead th {
-  background-color: var(--text-black) !important;
-  color: white !important;
+  background-color: var(--accent-teal) !important;
+  color: var(--text-black) !important;
   border: none !important;
   text-transform: uppercase !important;
   padding: 1rem !important;
+  border-bottom: 3px solid var(--text-black) !important;
 }
 
 .scoreboard-custom-table tbody tr {
