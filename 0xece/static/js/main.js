@@ -8,24 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
     initNavigation();
     initAnimations();
     initKeyboardShortcuts();
-    initBackgrounds();
+    // Initialize all components
+    initNavigation();
+    initAnimations();
+    initKeyboardShortcuts();
 });
 
 /**
- * Initialize Backgrounds based on Page
- */
-function initBackgrounds() {
-    const path = window.location.pathname;
-    const isIndex = path === '/' || path === '/index';
-    const isScoreboard = path.includes('scoreboard');
-
-    // Default to 'bg-special' (Static Stripes) for most pages (challenges, account, etc)
-    // Use 'bg-animated' (Dot Grid) for Index and Scoreboard only
-    // Broad check: ends in / (root), has 'index', or 'scoreboard'
-    if (path.endsWith('/') || path.includes('index') || path.includes('scoreboard')) {
-        document.body.classList.add('bg-dot-grid');
-    }
-}
+ * Navigation enhancements
 
 /**
  * Navigation enhancements
