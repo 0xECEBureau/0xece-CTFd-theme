@@ -3,12 +3,30 @@
  * Neo-Brutalist interactions and animations
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize all components
     initNavigation();
     initAnimations();
     initKeyboardShortcuts();
+    initBackgrounds();
 });
+
+/**
+ * Initialize Backgrounds based on Page
+ */
+function initBackgrounds() {
+    const path = window.location.pathname;
+    const isIndex = path === '/' || path === '/index';
+    const isScoreboard = path.includes('scoreboard');
+
+    // Default to 'bg-special' (Static Stripes) for most pages (challenges, account, etc)
+    // Use 'bg-animated' (Dot Grid) for Index and Scoreboard only
+    if (isIndex || isScoreboard) {
+        document.body.classList.add('bg-animated');
+    } else {
+        document.body.classList.add('bg-special');
+    }
+}
 
 /**
  * Navigation enhancements
@@ -17,7 +35,7 @@ function initNavigation() {
     // Add scroll effect to navbar
     const navbar = document.querySelector('.navbar');
     if (navbar) {
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.scrollY > 50) {
                 navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
             } else {
@@ -29,9 +47,9 @@ function initNavigation() {
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navbarNav = document.querySelector('.navbar-nav');
-    
+
     if (mobileMenuBtn && navbarNav) {
-        mobileMenuBtn.addEventListener('click', function() {
+        mobileMenuBtn.addEventListener('click', function () {
             navbarNav.classList.toggle('active');
         });
     }
@@ -66,7 +84,7 @@ function initAnimations() {
  * Keyboard shortcuts
  */
 function initKeyboardShortcuts() {
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         // Escape to close modals
         if (e.key === 'Escape') {
             const modal = document.querySelector('.modal-backdrop.active');
@@ -113,9 +131,9 @@ function showToast(message, type = 'info') {
         box-shadow: 4px 4px 0 var(--text-black);
     `;
     toast.textContent = message;
-    
+
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(20px)';
@@ -155,13 +173,13 @@ function debounce(func, wait) {
  * Add ripple effect to buttons
  */
 document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function(e) {
+    button.addEventListener('click', function (e) {
         const ripple = document.createElement('span');
         const rect = button.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
-        
+
         ripple.style.cssText = `
             position: absolute;
             width: ${size}px;
@@ -174,11 +192,11 @@ document.querySelectorAll('.btn').forEach(button => {
             animation: ripple 0.6s linear;
             pointer-events: none;
         `;
-        
+
         button.style.position = 'relative';
         button.style.overflow = 'hidden';
         button.appendChild(ripple);
-        
+
         setTimeout(() => ripple.remove(), 600);
     });
 });

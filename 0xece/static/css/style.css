@@ -61,11 +61,24 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+}
 
-  /* Animated Dot Grid Background */
+/* Page Specific Backgrounds (Applied via JS) */
+.bg-animated {
   background-image: radial-gradient(var(--text-gray) 1px, transparent 1px);
   background-size: 40px 40px;
   animation: moveBackground 60s linear infinite;
+}
+
+.bg-special {
+  /* Diagonal Stripes for Challenges/Account */
+  background-image: repeating-linear-gradient(45deg,
+      var(--bg-cream) 0,
+      var(--bg-cream) 20px,
+      #e8dcc5 20px,
+      #e8dcc5 40px);
+  background-attachment: fixed;
+  /* Parallax-like feel */
 }
 
 @keyframes moveBackground {
