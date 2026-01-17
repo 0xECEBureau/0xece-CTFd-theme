@@ -1824,7 +1824,122 @@ a:hover {
 }
 
 /* Highlight Top 3 in table too? Optional, but styles above cover it */
-.table-active {
-  background-color: rgba(27, 202, 183, 0.1) !important;
-  /* Subtle Teal tint */
+background-color: rgba(27, 202, 183, 0.1) !important;
+/* Subtle Teal tint */
+}
+
+
+/* === Account / User Profile === */
+
+/* Header Card (Jumbotron) */
+.jumbotron {
+  background-color: var(--card-white) !important;
+  border: var(--border-width) solid var(--text-black) !important;
+  box-shadow: 6px 6px 0 var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  padding: 3rem 2rem !important;
+  margin-bottom: 3rem !important;
+  color: var(--text-black) !important;
+}
+
+/* Titles in Jumbotron */
+.jumbotron h1 {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  background-color: var(--accent-teal);
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: var(--border-width) solid var(--text-black);
+  box-shadow: 4px 4px 0 var(--text-black);
+  transform: rotate(-1deg);
+  margin-bottom: 1.5rem !important;
+}
+
+/* Stats in Jumbotron */
+.jumbotron h2,
+.jumbotron h3 {
+  font-family: var(--font-mono) !important;
+  font-weight: bold !important;
+  background-color: var(--bg-cream);
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid var(--text-black);
+  margin: 0.5rem !important;
+}
+
+/* User Graph container */
+#score-graph {
+  background-color: var(--card-white) !important;
+  border: var(--border-width) solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  padding: 1rem !important;
+  box-shadow: 4px 4px 0 var(--text-black) !important;
+  margin-bottom: 3rem !important;
+}
+
+/* Tables (Solves, etc) - Match Scoreboard */
+table.table {
+  background: var(--card-white) !important;
+  border: var(--border-width) solid var(--text-black) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 4px 4px 0 var(--text-black) !important;
+  margin-bottom: 2rem !important;
+  border-collapse: separate !important;
+  /* Needed for radius on table */
+  overflow: hidden !important;
+}
+
+table.table thead th {
+  background-color: var(--accent-teal) !important;
+  color: var(--text-black) !important;
+  border-bottom: 3px solid var(--text-black) !important;
+  text-transform: uppercase !important;
+  font-weight: 800 !important;
+  padding: 1rem !important;
+}
+
+table.table td {
+  border-bottom: 1px solid var(--text-black) !important;
+  padding: 1rem !important;
+  font-weight: 600 !important;
+  vertical-align: middle !important;
+}
+
+/* Progress Bars */
+.progress {
+  background-color: var(--bg-cream) !important;
+  border: 2px solid var(--text-black) !important;
+  border-radius: 99px !important;
+  height: 1.5rem !important;
+  overflow: hidden !important;
+  box-shadow: 2px 2px 0 var(--text-black) !important;
+}
+
+.progress-bar {
+  background-color: var(--accent-teal) !important;
+  color: var(--text-black) !important;
+  font-weight: bold !important;
+  border-right: 2px solid var(--text-black) !important;
+}
+
+/* Nav Pills (if used in profile) */
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+  background-color: var(--accent-teal) !important;
+  color: var(--text-black) !important;
+  border: 2px solid var(--text-black) !important;
+  box-shadow: 3px 3px 0 var(--text-black) !important;
+}
+
+.nav-pills .nav-link {
+  color: var(--text-black) !important;
+  background-color: var(--card-white) !important;
+  border: 2px solid var(--text-black) !important;
+  margin-right: 0.5rem !important;
+  transition: transform 0.1s !important;
+}
+
+.nav-pills .nav-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--text-black);
 }
