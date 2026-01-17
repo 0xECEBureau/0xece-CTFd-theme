@@ -1837,10 +1837,10 @@ a:hover {
 
 /* Header Card (Jumbotron) */
 .jumbotron {
-  background-color: var(--card-white) !important;
-  border: var(--border-width) solid var(--text-black) !important;
-  box-shadow: 6px 6px 0 var(--text-black) !important;
-  border-radius: var(--radius) !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  /* border-radius: var(--radius) !important; */
   padding: 3rem 2rem !important;
   margin-bottom: 3rem !important;
   color: var(--text-black) !important;
@@ -1920,23 +1920,25 @@ table.table td {
 }
 
 .progress-bar {
-  background-color: var(--accent-teal) !important;
-  /* Force Teal */
+  /* background-color: var(--accent-teal) !important; <-- Removed to allow category colors */
   color: var(--text-black) !important;
   font-weight: bold !important;
   border-right: 2px solid var(--text-black) !important;
 }
 
-/* Force overrides for specific Bootstrap context classes if CTFd uses them */
-.progress-bar.bg-success,
-.progress-bar.bg-info,
-.progress-bar.bg-primary {
-  background-color: var(--accent-teal) !important;
+/* Force overrides for specific Bootstrap context classes */
+.progress-bar.bg-success {
+  background-color: #28a745 !important;
+  /* CTFd Green */
 }
 
+/* .progress-bar.bg-info, .progress-bar.bg-primary {
+    Removed to let category colors work if they use these or inline styles
+} */
+
 .progress-bar.bg-danger {
-  background-color: #ff4757 !important;
-  /* Keep Red for Fails? Or use theme color? Let's use Red for Fails/Danger */
+  background-color: #dc3545 !important;
+  /* CTFd Red */
   border-right: 2px solid var(--text-black) !important;
 }
 
