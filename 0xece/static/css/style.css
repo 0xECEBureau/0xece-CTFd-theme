@@ -61,6 +61,21 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+
+  /* Animated Dot Grid Background */
+  background-image: radial-gradient(var(--text-gray) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: moveBackground 60s linear infinite;
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 40px 40px;
+  }
 }
 
 /* Cyber Vignette Effect */
@@ -1727,6 +1742,9 @@ a:hover {
   font-weight: bold !important;
   display: block !important;
   margin-bottom: 1rem !important;
+  color: var(--text-black) !important;
+  /* Explicit black color */
+  text-shadow: none !important;
 }
 
 .podium-info h3 {
@@ -1756,6 +1774,7 @@ a:hover {
 
 .scoreboard-custom-table table {
   margin-bottom: 0 !important;
+  border-collapse: collapse !important;
 }
 
 .scoreboard-custom-table thead th {
@@ -1779,7 +1798,8 @@ a:hover {
 .scoreboard-custom-table th {
   padding: 1rem !important;
   vertical-align: middle !important;
-  border-bottom: 1px solid #dee2e6 !important;
+  border-bottom: 2px solid var(--text-black) !important;
+  /* Bold, solid border */
   font-weight: 600 !important;
 }
 
