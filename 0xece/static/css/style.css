@@ -79,7 +79,7 @@ body::before {
   background-color: var(--bg-cream);
   background-image: radial-gradient(var(--text-gray) 1px, transparent 1px);
   background-size: 40px 40px;
-  animation: moveDots 60s linear infinite;
+  animation: moveDots 4s linear infinite;
   will-change: background-position;
 }
 
