@@ -75,25 +75,15 @@ body::before {
   /* Behind content */
   pointer-events: none;
 
-  /* DEFAULT: Animated Stripes (Seamless Repeating Gradient) */
+  /* DEFAULT: Animated Dots (Universal) */
   background-color: var(--bg-cream);
-  background-image: repeating-linear-gradient(45deg,
-      #e8dcc5,
-      #e8dcc5 20px,
-      var(--bg-cream) 20px,
-      var(--bg-cream) 40px);
-  background-size: auto;
-  /* No fixed size = No squares */
-  animation: moveStripes 2s linear infinite;
-  will-change: background-position;
-}
-
-/* OVERRIDE: Animated Dots (Index & Scoreboard) */
-body.bg-dot-grid::before {
   background-image: radial-gradient(var(--text-gray) 1px, transparent 1px);
   background-size: 40px 40px;
   animation: moveDots 60s linear infinite;
+  will-change: background-position;
 }
+
+
 
 /* Animation for Dots */
 @keyframes moveDots {
@@ -106,23 +96,10 @@ body.bg-dot-grid::before {
   }
 }
 
-/* Animation for Stripes */
-@keyframes moveStripes {
-  0% {
-    background-position: 0 0;
-  }
 
-  100% {
-    /* 
-       Pattern repeat distance along axis = 40px / sin(45deg) ≈ 56.5685px
-       Moving exactly this distance creates a seamless loop.
-    */
-    background-position: 56.6px 0;
-  }
-}
 
 /* Cyber Vignette Effect */
-body::before {
+body::after {
   content: '';
   position: fixed;
   top: 0;
