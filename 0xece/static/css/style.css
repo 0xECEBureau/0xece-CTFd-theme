@@ -68,8 +68,9 @@ body {
       var(--bg-cream) 20px,
       #e8dcc5 20px,
       #e8dcc5 40px);
-  background-size: 200% 200%;
-  animation: moveStripes 40s linear infinite;
+  /* background-size removed to let gradient repeat naturally */
+  animation: moveStripes 2s linear infinite;
+  /* Faster animation to be noticeable */
 }
 
 /* OVERRIDE: Animated Dots (Index & Scoreboard) */

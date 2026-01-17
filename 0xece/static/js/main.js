@@ -21,7 +21,8 @@ function initBackgrounds() {
 
     // Default to 'bg-special' (Static Stripes) for most pages (challenges, account, etc)
     // Use 'bg-animated' (Dot Grid) for Index and Scoreboard only
-    if (isIndex || isScoreboard) {
+    console.log("Path:", path); // Debug
+    if (path === '/' || path.includes('/index') || path.includes('scoreboard')) {
         document.body.classList.add('bg-dot-grid');
     }
 }
