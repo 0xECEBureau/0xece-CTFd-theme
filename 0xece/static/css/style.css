@@ -61,8 +61,21 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+}
 
-  /* DEFAULT: Animated Stripes (Robust Tile Method) */
+/* Background Animation Layer (Puts animation in a fixed container) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  /* Behind content */
+  pointer-events: none;
+
+  /* DEFAULT: Animated Stripes */
   background-color: var(--bg-cream);
   background-image: linear-gradient(45deg,
       #e8dcc5 25%,
@@ -73,12 +86,13 @@ body {
       transparent 75%,
       transparent 100%);
   background-size: 60px 60px;
-  /* Explicit tile size */
   animation: moveStripes 2s linear infinite;
+  will-change: background-position;
+  /* Optimize performance */
 }
 
 /* OVERRIDE: Animated Dots (Index & Scoreboard) */
-body.bg-dot-grid {
+body.bg-dot-grid::before {
   background-image: radial-gradient(var(--text-gray) 1px, transparent 1px);
   background-size: 40px 40px;
   animation: moveDots 60s linear infinite;
@@ -103,7 +117,6 @@ body.bg-dot-grid {
 
   100% {
     background-position: 60px 60px;
-    /* Matches background-size for seamless loop */
   }
 }
 
