@@ -1477,9 +1477,9 @@ a:hover {
   background-color: var(--bg-cream) !important;
 }
 
-.progress-bar {
+/* .progress-bar {
   background-color: var(--accent-teal) !important;
-}
+} */
 
 /* === Solves Table (Challenge Modal) === */
 #challenge-window .table {
