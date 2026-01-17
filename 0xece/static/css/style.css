@@ -1836,48 +1836,50 @@ a:hover {
 /* === Account / User Profile === */
 
 /* Header Card (Jumbotron) */
-.jumbotron {
+body .jumbotron {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  /* border-radius: var(--radius) !important; */
   padding: 3rem 2rem !important;
   margin-bottom: 3rem !important;
   color: var(--text-black) !important;
 }
 
-/* Titles in Jumbotron */
 /* Titles in Jumbotron (User Name) */
-.jumbotron h1 {
+body .jumbotron h1 {
   font-weight: 900 !important;
   text-transform: uppercase !important;
-  background-color: var(--accent-teal);
+  background-color: var(--accent-teal) !important;
   color: var(--text-black) !important;
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  border: 3px solid var(--text-black);
-  box-shadow: 6px 6px 0 var(--text-black);
-  transform: skew(-5deg) rotate(-2deg);
+  display: inline-block !important;
+  padding: 0.5rem 2rem !important;
+  border: 3px solid var(--text-black) !important;
+  box-shadow: 6px 6px 0 var(--text-black) !important;
+  transform: skew(-5deg) rotate(-2deg) !important;
   margin-bottom: 2rem !important;
   font-size: 3.5rem !important;
-  letter-spacing: -2px;
+  letter-spacing: -2px !important;
 }
 
 /* Stats in Jumbotron (Rank, Score) */
-.jumbotron h2,
-.jumbotron h3 {
+body .jumbotron h2,
+body .jumbotron h3 {
   font-family: var(--font-mono) !important;
   font-weight: 800 !important;
-  background-color: var(--card-white);
+  background-color: var(--card-white) !important;
   /* White pills */
-  display: inline-block;
-  padding: 0.5rem 1.5rem;
-  border: 2px solid var(--text-black);
-  border-radius: 50px;
+  display: inline-block !important;
+  padding: 0.5rem 1.5rem !important;
+  border: 2px solid var(--text-black) !important;
+  border-radius: 50px !important;
   /* Pill shape */
   margin: 0.5rem 1rem !important;
-  box-shadow: 4px 4px 0 var(--text-black);
+  box-shadow: 4px 4px 0 var(--text-black) !important;
   font-size: 1.5rem !important;
+}
+
+box-shadow: 4px 4px 0 var(--text-black);
+font-size: 1.5rem !important;
 }
 
 
