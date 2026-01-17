@@ -1783,13 +1783,16 @@ a:hover {
 }
 
 /* Scoreboard Table */
+/* Scoreboard Table */
 .scoreboard-custom-table {
-  background: var(--card-white) !important;
-  border: var(--border-width) solid var(--text-black) !important;
-  border-radius: var(--radius) !important;
-  box-shadow: 6px 6px 0 var(--text-black) !important;
-  padding: 1rem !important;
+  /* background: var(--card-white) !important;  <-- Removed to fix "white outline" */
+  /* border: var(--border-width) solid var(--text-black) !important; */
+  /* box-shadow: 6px 6px 0 var(--text-black) !important; */
+  /* padding: 1rem !important; */
   overflow: hidden !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .scoreboard-custom-table table {
@@ -1824,8 +1827,9 @@ a:hover {
 }
 
 /* Highlight Top 3 in table too? Optional, but styles above cover it */
-background-color: rgba(27, 202, 183, 0.1) !important;
-/* Subtle Teal tint */
+.table-active {
+  background-color: rgba(27, 202, 183, 0.1) !important;
+  /* Subtle Teal tint */
 }
 
 
@@ -1917,8 +1921,22 @@ table.table td {
 
 .progress-bar {
   background-color: var(--accent-teal) !important;
+  /* Force Teal */
   color: var(--text-black) !important;
   font-weight: bold !important;
+  border-right: 2px solid var(--text-black) !important;
+}
+
+/* Force overrides for specific Bootstrap context classes if CTFd uses them */
+.progress-bar.bg-success,
+.progress-bar.bg-info,
+.progress-bar.bg-primary {
+  background-color: var(--accent-teal) !important;
+}
+
+.progress-bar.bg-danger {
+  background-color: #ff4757 !important;
+  /* Keep Red for Fails? Or use theme color? Let's use Red for Fails/Danger */
   border-right: 2px solid var(--text-black) !important;
 }
 
