@@ -1847,29 +1847,39 @@ a:hover {
 }
 
 /* Titles in Jumbotron */
+/* Titles in Jumbotron (User Name) */
 .jumbotron h1 {
   font-weight: 900 !important;
   text-transform: uppercase !important;
   background-color: var(--accent-teal);
+  color: var(--text-black) !important;
   display: inline-block;
-  padding: 0.5rem 1rem;
-  border: var(--border-width) solid var(--text-black);
-  box-shadow: 4px 4px 0 var(--text-black);
-  transform: rotate(-1deg);
-  margin-bottom: 1.5rem !important;
+  padding: 0.5rem 2rem;
+  border: 3px solid var(--text-black);
+  box-shadow: 6px 6px 0 var(--text-black);
+  transform: skew(-5deg) rotate(-2deg);
+  margin-bottom: 2rem !important;
+  font-size: 3.5rem !important;
+  letter-spacing: -2px;
 }
 
-/* Stats in Jumbotron */
+/* Stats in Jumbotron (Rank, Score) */
 .jumbotron h2,
 .jumbotron h3 {
   font-family: var(--font-mono) !important;
-  font-weight: bold !important;
-  background-color: var(--bg-cream);
+  font-weight: 800 !important;
+  background-color: var(--card-white);
+  /* White pills */
   display: inline-block;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 1.5rem;
   border: 2px solid var(--text-black);
-  margin: 0.5rem !important;
+  border-radius: 50px;
+  /* Pill shape */
+  margin: 0.5rem 1rem !important;
+  box-shadow: 4px 4px 0 var(--text-black);
+  font-size: 1.5rem !important;
 }
+
 
 /* User Graph container */
 #score-graph {
